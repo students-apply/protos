@@ -6,7 +6,8 @@ option go_package = "github.com/blazee5/protos";
 
 service Auth {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
-  rpc SignIn(SignInRequest) returns (SignInResponse);
+  rpc SignIn(SignInRequest) returns (TokenResponse);
+  rpc RefreshToken(TokenRequest) returns (TokenResponse);
 }
 
 message SignUpRequest {
@@ -25,6 +26,11 @@ message SignInRequest {
   string password = 2;
 }
 
-message SignInResponse {
-  string token = 1;
+message TokenRequest {
+  string refresh_token = 2;
+}
+
+message TokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
 }
