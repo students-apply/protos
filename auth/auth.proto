@@ -4,7 +4,7 @@ package auth;
 
 option go_package = "github.com/blazee5/protos";
 
-service Auth {
+service AuthService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
   rpc SignIn(SignInRequest) returns (TokenResponse);
   rpc RefreshToken(TokenRequest) returns (TokenResponse);
