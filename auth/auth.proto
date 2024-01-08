@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth;
 
-option go_package = "github.com/blazee5/protos";
+option go_package = "github.com/students-apply/protos";
 
 service AuthService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
