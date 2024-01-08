@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package resume;
+
+option go_package = "github.com/students-apply/protos;resume";
+
+service ResumeService {
+  rpc CreateResume(CreateResumeRequest) returns (CreateResumeResponse);
+}
+
+message CreateResumeRequest {
+  string user_id = 1;
+}
+
+message CreateResumeResponse {}

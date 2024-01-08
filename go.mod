@@ -1,4 +1,4 @@
-module github.com/blazee5/protos
+module github.com/students-apply/protos
 
 go 1.21.5
 
