@@ -4,12 +4,92 @@ package resume;
 
 option go_package = "github.com/students-apply/protos;resume";
 
+
 service ResumeService {
   rpc CreateResume(CreateResumeRequest) returns (CreateResumeResponse);
+  rpc UpdateResume(UpdateResumeRequest) returns (UpdateResumeResponse);
+  rpc GetResumeByID(GetResumeByIDRequest) returns (GetResumeByIDResponse);
+  rpc GetUserResumes(GetUserResumesRequest) returns (GetUserResumesResponse);
+  rpc DeleteResume(DeleteResumeRequest) returns (DeleteResumeResponse);
 }
 
 message CreateResumeRequest {
   string user_id = 1;
+  Resume resume = 2;
 }
 
-message CreateResumeResponse {}
+message CreateResumeResponse {
+  string resume_id = 1;
+}
+
+message UpdateResumeRequest {
+  string user_id = 1;
+  string resume_id = 2;
+  Resume resume = 3;
+
+}
+
+message UpdateResumeResponse {}
+
+message GetResumeByIDRequest {
+  string user_id = 1;
+  string resume_id = 2;
+}
+
+message GetResumeByIDResponse {
+  optional Resume resume = 4;
+}
+
+message GetUserResumesRequest {
+  string user_id = 1;
+}
+
+message GetUserResumesResponse {
+  repeated Resume resumes = 1;
+}
+
+message DeleteResumeRequest {
+  string resume_id = 1;
+}
+
+message DeleteResumeResponse {}
+
+
+message Resume {
+  string first_name = 1;
+  string last_name = 2;
+  optional string middle_name = 3;
+  Date birthday = 4;
+  string email = 5;
+  optional string phone = 6;
+  int32 city_id = 7;
+  repeated Experience experience = 8;
+  repeated Skill skills = 9;
+  optional Image image = 10;
+}
+
+message Date {
+  int32 year = 1;
+  int32 month = 2;
+  int32 day = 3;
+}
+
+message Experience {
+  string position = 1;
+  string company = 2;
+  Date start_date = 3;
+  Date end_date = 4;
+  string description = 5;
+}
+
+message Skill {
+  string skill_name = 1;
+  float level = 2;
+}
+
+message Image {
+  bytes chunk = 1;
+  string content_type = 2;
+  string name = 3;
+}
+
