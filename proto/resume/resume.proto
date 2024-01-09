@@ -3,6 +3,7 @@ syntax = "proto3";
 package resume;
 
 option go_package = "github.com/students-apply/protos;resume";
+import "google/protobuf/timestamp.proto";
 
 
 service ResumeService {
@@ -57,7 +58,7 @@ message Resume {
   string first_name = 1;
   string last_name = 2;
   optional string middle_name = 3;
-  Date birthday = 4;
+  google.protobuf.Timestamp birthday = 4;
   string email = 5;
   optional string phone = 6;
   int32 city_id = 7;
@@ -66,17 +67,12 @@ message Resume {
   optional Image image = 10;
 }
 
-message Date {
-  int32 year = 1;
-  int32 month = 2;
-  int32 day = 3;
-}
 
 message Experience {
   string position = 1;
   string company = 2;
-  Date start_date = 3;
-  Date end_date = 4;
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp end_date = 4;
   string description = 5;
 }
 
