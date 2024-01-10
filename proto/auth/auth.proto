@@ -67,7 +67,8 @@ message UserRequest {
 message UploadAvatarRequest {
   string user_id = 1;
   string file_name = 2;
-  bytes chunk = 3;
+  string content_type = 3;
+  bytes chunk = 4;
 }
 
 message UploadAvatarResponse {}
