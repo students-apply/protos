@@ -14,6 +14,13 @@ service ResumeService {
   rpc DeleteResume(DeleteResumeRequest) returns (DeleteResumeResponse);
 }
 
+service ExperienceService {
+  rpc CreateExperience(CreateExperienceRequest) returns (CreateExperienceResponse);
+  rpc UpdateExperience(UpdateExperienceRequest) returns (Experience);
+  rpc GetExperience(GetExperienceRequest) returns (Experience);
+  rpc DeleteExperience(DeleteExperienceRequest) returns (DeleteExperienceResponse);
+}
+
 message CreateResumeRequest {
   string user_id = 1;
   Resume resume = 2;
@@ -29,7 +36,9 @@ message UpdateResumeRequest {
   Resume resume = 3;
 }
 
-message UpdateResumeResponse {}
+message UpdateResumeResponse {
+  Resume resume = 1;
+}
 
 message GetResumeByIDRequest {
   string user_id = 1;
@@ -54,6 +63,34 @@ message DeleteResumeRequest {
 
 message DeleteResumeResponse {}
 
+message CreateExperienceRequest {
+  string resume_id = 1;
+  string user_id = 2;
+  Experience experience = 3;
+}
+
+message CreateExperienceResponse {
+  string experience_id = 1;
+}
+
+message UpdateExperienceRequest {
+  string experience_id = 1;
+  string user_id = 2;
+  Experience experience = 3;
+}
+
+
+message GetExperienceRequest {
+  string experience_id = 1;
+}
+
+message DeleteExperienceRequest {
+  string experience_id = 1;
+  string user_id = 2;
+}
+
+message DeleteExperienceResponse {}
+
 message Resume {
   string first_name = 1;
   string last_name = 2;
@@ -62,27 +99,27 @@ message Resume {
   string email = 5;
   optional string phone = 6;
   int32 city_id = 7;
-  repeated Experience experience = 8;
-  repeated Skill skills = 9;
-  optional Image image = 10;
 }
 
 
 message Experience {
-  string position = 1;
-  string company = 2;
-  google.protobuf.Timestamp start_date = 3;
-  google.protobuf.Timestamp end_date = 4;
-  string description = 5;
+  string resume_id = 1;
+  string position = 2;
+  string company = 3;
+  google.protobuf.Timestamp start_date = 4;
+  google.protobuf.Timestamp end_date = 5;
+  string description = 6;
 }
 
 message Skill {
-  string skill_name = 1;
-  float level = 2;
+  string resume_id = 1;
+  string skill_name = 2;
+  float level = 3;
 }
 
 message Image {
-  bytes chunk = 1;
-  string content_type = 2;
-  string name = 3;
+  string resume_id = 1;
+  bytes chunk = 2;
+  string content_type = 3;
+  string name = 4;
 }
