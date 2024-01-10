@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package experience;
+
+option go_package = "github.com/students-apply/protos;experience";
+import "google/protobuf/timestamp.proto";
+
+
+
+service ExperienceService {
+  rpc CreateExperience(CreateExperienceRequest) returns (CreateExperienceResponse);
+  rpc UpdateExperience(UpdateExperienceRequest) returns (Experience);
+  rpc GetExperience(GetExperienceRequest) returns (Experience);
+  rpc DeleteExperience(DeleteExperienceRequest) returns (DeleteExperienceResponse);
+}
+
+
+message CreateExperienceRequest {
+  string resume_id = 1;
+  string user_id = 2;
+  Experience experience = 3;
+}
+
+message CreateExperienceResponse {
+  string experience_id = 1;
+}
+
+message UpdateExperienceRequest {
+  string experience_id = 1;
+  string user_id = 2;
+  Experience experience = 3;
+}
+
+
+message GetExperienceRequest {
+  string experience_id = 1;
+}
+
+message DeleteExperienceRequest {
+  string experience_id = 1;
+  string user_id = 2;
+}
+
+message DeleteExperienceResponse {}
+
+
+message Experience {
+  string resume_id = 1;
+  string position = 2;
+  string company = 3;
+  google.protobuf.Timestamp start_date = 4;
+  google.protobuf.Timestamp end_date = 5;
+  string description = 6;
+}

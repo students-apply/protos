@@ -14,13 +14,6 @@ service ResumeService {
   rpc DeleteResume(DeleteResumeRequest) returns (DeleteResumeResponse);
 }
 
-service ExperienceService {
-  rpc CreateExperience(CreateExperienceRequest) returns (CreateExperienceResponse);
-  rpc UpdateExperience(UpdateExperienceRequest) returns (Experience);
-  rpc GetExperience(GetExperienceRequest) returns (Experience);
-  rpc DeleteExperience(DeleteExperienceRequest) returns (DeleteExperienceResponse);
-}
-
 message CreateResumeRequest {
   string user_id = 1;
   Resume resume = 2;
@@ -63,34 +56,6 @@ message DeleteResumeRequest {
 
 message DeleteResumeResponse {}
 
-message CreateExperienceRequest {
-  string resume_id = 1;
-  string user_id = 2;
-  Experience experience = 3;
-}
-
-message CreateExperienceResponse {
-  string experience_id = 1;
-}
-
-message UpdateExperienceRequest {
-  string experience_id = 1;
-  string user_id = 2;
-  Experience experience = 3;
-}
-
-
-message GetExperienceRequest {
-  string experience_id = 1;
-}
-
-message DeleteExperienceRequest {
-  string experience_id = 1;
-  string user_id = 2;
-}
-
-message DeleteExperienceResponse {}
-
 message Resume {
   string first_name = 1;
   string last_name = 2;
@@ -101,21 +66,6 @@ message Resume {
   int32 city_id = 7;
 }
 
-
-message Experience {
-  string resume_id = 1;
-  string position = 2;
-  string company = 3;
-  google.protobuf.Timestamp start_date = 4;
-  google.protobuf.Timestamp end_date = 5;
-  string description = 6;
-}
-
-message Skill {
-  string resume_id = 1;
-  string skill_name = 2;
-  float level = 3;
-}
 
 message Image {
   string resume_id = 1;
