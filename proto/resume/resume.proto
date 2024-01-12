@@ -8,7 +8,7 @@ import "google/protobuf/timestamp.proto";
 
 service ResumeService {
   rpc CreateResume(CreateResumeRequest) returns (CreateResumeResponse);
-  rpc UpdateResume(UpdateResumeRequest) returns (Resume);
+  rpc UpdateResume(UpdateResumeRequest) returns (UpdateResumeResponse);
   rpc GetResumeByID(GetResumeByIDRequest) returns (Resume);
   rpc GetUserResumes(GetUserResumesRequest) returns (GetUserResumesResponse);
   rpc DeleteResume(DeleteResumeRequest) returns (DeleteResumeResponse);
@@ -29,6 +29,7 @@ message UpdateResumeRequest {
   Resume resume = 3;
 }
 
+message UpdateResumeResponse {}
 
 message GetResumeByIDRequest {
   string user_id = 1;
