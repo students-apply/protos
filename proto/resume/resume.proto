@@ -71,7 +71,7 @@ message Resume {
   google.protobuf.Timestamp birthday = 6;
   string email = 7;
   string phone = 8;
-  int32 city_id = 9;
+  string city = 9;
 }
 
 
