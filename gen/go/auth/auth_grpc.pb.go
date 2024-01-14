@@ -22,6 +22,7 @@ const (
 	AuthService_SignUp_FullMethodName       = "/auth.AuthService/SignUp"
 	AuthService_SignIn_FullMethodName       = "/auth.AuthService/SignIn"
 	AuthService_RefreshToken_FullMethodName = "/auth.AuthService/RefreshToken"
+	AuthService_OAuth_FullMethodName        = "/auth.AuthService/OAuth"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -31,6 +32,7 @@ type AuthServiceClient interface {
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error)
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*TokenResponse, error)
 	RefreshToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*TokenResponse, error)
+	OAuth(ctx context.Context, in *OAuthRequest, opts ...grpc.CallOption) (*TokenResponse, error)
 }
 
 type authServiceClient struct {
@@ -68,6 +70,15 @@ func (c *authServiceClient) RefreshToken(ctx context.Context, in *TokenRequest, 
 	return out, nil
 }
 
+func (c *authServiceClient) OAuth(ctx context.Context, in *OAuthRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
+	out := new(TokenResponse)
+	err := c.cc.Invoke(ctx, AuthService_OAuth_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
@@ -75,6 +86,7 @@ type AuthServiceServer interface {
 	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)
 	SignIn(context.Context, *SignInRequest) (*TokenResponse, error)
 	RefreshToken(context.Context, *TokenRequest) (*TokenResponse, error)
+	OAuth(context.Context, *OAuthRequest) (*TokenResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -90,6 +102,9 @@ func (UnimplementedAuthServiceServer) SignIn(context.Context, *SignInRequest) (*
 }
 func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *TokenRequest) (*TokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
+}
+func (UnimplementedAuthServiceServer) OAuth(context.Context, *OAuthRequest) (*TokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OAuth not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
@@ -158,6 +173,24 @@ func _AuthService_RefreshToken_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_OAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OAuthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).OAuth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_OAuth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).OAuth(ctx, req.(*OAuthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +209,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RefreshToken",
 			Handler:    _AuthService_RefreshToken_Handler,
+		},
+		{
+			MethodName: "OAuth",
+			Handler:    _AuthService_OAuth_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
