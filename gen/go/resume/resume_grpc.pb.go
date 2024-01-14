@@ -32,7 +32,7 @@ const (
 type ResumeServiceClient interface {
 	CreateResume(ctx context.Context, in *CreateResumeRequest, opts ...grpc.CallOption) (*CreateResumeResponse, error)
 	UpdateResume(ctx context.Context, in *UpdateResumeRequest, opts ...grpc.CallOption) (*UpdateResumeResponse, error)
-	GetResumeByID(ctx context.Context, in *GetResumeByIDRequest, opts ...grpc.CallOption) (*GetResumeByIDResponse, error)
+	GetResumeByID(ctx context.Context, in *GetResumeByIDRequest, opts ...grpc.CallOption) (*Resume, error)
 	GetUserResumes(ctx context.Context, in *GetUserResumesRequest, opts ...grpc.CallOption) (*GetUserResumesResponse, error)
 	DeleteResume(ctx context.Context, in *DeleteResumeRequest, opts ...grpc.CallOption) (*DeleteResumeResponse, error)
 }
@@ -63,8 +63,8 @@ func (c *resumeServiceClient) UpdateResume(ctx context.Context, in *UpdateResume
 	return out, nil
 }
 
-func (c *resumeServiceClient) GetResumeByID(ctx context.Context, in *GetResumeByIDRequest, opts ...grpc.CallOption) (*GetResumeByIDResponse, error) {
-	out := new(GetResumeByIDResponse)
+func (c *resumeServiceClient) GetResumeByID(ctx context.Context, in *GetResumeByIDRequest, opts ...grpc.CallOption) (*Resume, error) {
+	out := new(Resume)
 	err := c.cc.Invoke(ctx, ResumeService_GetResumeByID_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (c *resumeServiceClient) DeleteResume(ctx context.Context, in *DeleteResume
 type ResumeServiceServer interface {
 	CreateResume(context.Context, *CreateResumeRequest) (*CreateResumeResponse, error)
 	UpdateResume(context.Context, *UpdateResumeRequest) (*UpdateResumeResponse, error)
-	GetResumeByID(context.Context, *GetResumeByIDRequest) (*GetResumeByIDResponse, error)
+	GetResumeByID(context.Context, *GetResumeByIDRequest) (*Resume, error)
 	GetUserResumes(context.Context, *GetUserResumesRequest) (*GetUserResumesResponse, error)
 	DeleteResume(context.Context, *DeleteResumeRequest) (*DeleteResumeResponse, error)
 	mustEmbedUnimplementedResumeServiceServer()
@@ -112,7 +112,7 @@ func (UnimplementedResumeServiceServer) CreateResume(context.Context, *CreateRes
 func (UnimplementedResumeServiceServer) UpdateResume(context.Context, *UpdateResumeRequest) (*UpdateResumeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateResume not implemented")
 }
-func (UnimplementedResumeServiceServer) GetResumeByID(context.Context, *GetResumeByIDRequest) (*GetResumeByIDResponse, error) {
+func (UnimplementedResumeServiceServer) GetResumeByID(context.Context, *GetResumeByIDRequest) (*Resume, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetResumeByID not implemented")
 }
 func (UnimplementedResumeServiceServer) GetUserResumes(context.Context, *GetUserResumesRequest) (*GetUserResumesResponse, error) {
