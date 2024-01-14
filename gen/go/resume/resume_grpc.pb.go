@@ -24,6 +24,7 @@ const (
 	ResumeService_GetResumeByID_FullMethodName  = "/resume.ResumeService/GetResumeByID"
 	ResumeService_GetUserResumes_FullMethodName = "/resume.ResumeService/GetUserResumes"
 	ResumeService_DeleteResume_FullMethodName   = "/resume.ResumeService/DeleteResume"
+	ResumeService_UploadImage_FullMethodName    = "/resume.ResumeService/UploadImage"
 )
 
 // ResumeServiceClient is the client API for ResumeService service.
@@ -35,6 +36,7 @@ type ResumeServiceClient interface {
 	GetResumeByID(ctx context.Context, in *GetResumeByIDRequest, opts ...grpc.CallOption) (*Resume, error)
 	GetUserResumes(ctx context.Context, in *GetUserResumesRequest, opts ...grpc.CallOption) (*GetUserResumesResponse, error)
 	DeleteResume(ctx context.Context, in *DeleteResumeRequest, opts ...grpc.CallOption) (*DeleteResumeResponse, error)
+	UploadImage(ctx context.Context, in *UploadImageRequest, opts ...grpc.CallOption) (*UploadImageResponse, error)
 }
 
 type resumeServiceClient struct {
@@ -90,6 +92,15 @@ func (c *resumeServiceClient) DeleteResume(ctx context.Context, in *DeleteResume
 	return out, nil
 }
 
+func (c *resumeServiceClient) UploadImage(ctx context.Context, in *UploadImageRequest, opts ...grpc.CallOption) (*UploadImageResponse, error) {
+	out := new(UploadImageResponse)
+	err := c.cc.Invoke(ctx, ResumeService_UploadImage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ResumeServiceServer is the server API for ResumeService service.
 // All implementations must embed UnimplementedResumeServiceServer
 // for forward compatibility
@@ -99,6 +110,7 @@ type ResumeServiceServer interface {
 	GetResumeByID(context.Context, *GetResumeByIDRequest) (*Resume, error)
 	GetUserResumes(context.Context, *GetUserResumesRequest) (*GetUserResumesResponse, error)
 	DeleteResume(context.Context, *DeleteResumeRequest) (*DeleteResumeResponse, error)
+	UploadImage(context.Context, *UploadImageRequest) (*UploadImageResponse, error)
 	mustEmbedUnimplementedResumeServiceServer()
 }
 
@@ -120,6 +132,9 @@ func (UnimplementedResumeServiceServer) GetUserResumes(context.Context, *GetUser
 }
 func (UnimplementedResumeServiceServer) DeleteResume(context.Context, *DeleteResumeRequest) (*DeleteResumeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteResume not implemented")
+}
+func (UnimplementedResumeServiceServer) UploadImage(context.Context, *UploadImageRequest) (*UploadImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadImage not implemented")
 }
 func (UnimplementedResumeServiceServer) mustEmbedUnimplementedResumeServiceServer() {}
 
@@ -224,6 +239,24 @@ func _ResumeService_DeleteResume_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ResumeService_UploadImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResumeServiceServer).UploadImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ResumeService_UploadImage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResumeServiceServer).UploadImage(ctx, req.(*UploadImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ResumeService_ServiceDesc is the grpc.ServiceDesc for ResumeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -250,6 +283,10 @@ var ResumeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteResume",
 			Handler:    _ResumeService_DeleteResume_Handler,
+		},
+		{
+			MethodName: "UploadImage",
+			Handler:    _ResumeService_UploadImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

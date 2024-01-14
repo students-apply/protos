@@ -12,6 +12,7 @@ service ResumeService {
   rpc GetResumeByID(GetResumeByIDRequest) returns (Resume);
   rpc GetUserResumes(GetUserResumesRequest) returns (GetUserResumesResponse);
   rpc DeleteResume(DeleteResumeRequest) returns (DeleteResumeResponse);
+  rpc UploadImage(UploadImageRequest) returns (UploadImageResponse);
 }
 
 message CreateResumeRequest {
@@ -52,6 +53,15 @@ message DeleteResumeRequest {
 
 message DeleteResumeResponse {}
 
+message UploadImageRequest {
+  string resume_id = 1;
+  bytes chunk = 2;
+  string content_type = 3;
+  string name = 4;
+}
+
+message UploadImageResponse {}
+
 message ShortResume {
   string first_name = 1;
   string last_name = 2;
@@ -72,12 +82,4 @@ message Resume {
   string email = 7;
   string phone = 8;
   string city = 9;
-}
-
-
-message Image {
-  string resume_id = 1;
-  bytes chunk = 2;
-  string content_type = 3;
-  string name = 4;
 }
