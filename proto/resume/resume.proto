@@ -82,4 +82,5 @@ message Resume {
   string email = 7;
   string phone = 8;
   string city = 9;
+  string image = 10;
 }
