@@ -9,7 +9,7 @@ import "google/protobuf/timestamp.proto";
 
 service ExperienceService {
   rpc CreateExperience(CreateExperienceRequest) returns (CreateExperienceResponse);
-  rpc UpdateExperience(UpdateExperienceRequest) returns (Experience);
+  rpc UpdateExperience(UpdateExperienceRequest) returns (UpdateExperienceResponse);
   rpc GetExperience(GetExperienceRequest) returns (Experience);
   rpc DeleteExperience(DeleteExperienceRequest) returns (DeleteExperienceResponse);
 }
@@ -43,6 +43,7 @@ message DeleteExperienceRequest {
 
 message DeleteExperienceResponse {}
 
+message UpdateExperienceResponse {}
 
 message Experience {
   string resume_id = 1;

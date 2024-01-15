@@ -30,7 +30,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ExperienceServiceClient interface {
 	CreateExperience(ctx context.Context, in *CreateExperienceRequest, opts ...grpc.CallOption) (*CreateExperienceResponse, error)
-	UpdateExperience(ctx context.Context, in *UpdateExperienceRequest, opts ...grpc.CallOption) (*Experience, error)
+	UpdateExperience(ctx context.Context, in *UpdateExperienceRequest, opts ...grpc.CallOption) (*UpdateExperienceResponse, error)
 	GetExperience(ctx context.Context, in *GetExperienceRequest, opts ...grpc.CallOption) (*Experience, error)
 	DeleteExperience(ctx context.Context, in *DeleteExperienceRequest, opts ...grpc.CallOption) (*DeleteExperienceResponse, error)
 }
@@ -52,8 +52,8 @@ func (c *experienceServiceClient) CreateExperience(ctx context.Context, in *Crea
 	return out, nil
 }
 
-func (c *experienceServiceClient) UpdateExperience(ctx context.Context, in *UpdateExperienceRequest, opts ...grpc.CallOption) (*Experience, error) {
-	out := new(Experience)
+func (c *experienceServiceClient) UpdateExperience(ctx context.Context, in *UpdateExperienceRequest, opts ...grpc.CallOption) (*UpdateExperienceResponse, error) {
+	out := new(UpdateExperienceResponse)
 	err := c.cc.Invoke(ctx, ExperienceService_UpdateExperience_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -84,7 +84,7 @@ func (c *experienceServiceClient) DeleteExperience(ctx context.Context, in *Dele
 // for forward compatibility
 type ExperienceServiceServer interface {
 	CreateExperience(context.Context, *CreateExperienceRequest) (*CreateExperienceResponse, error)
-	UpdateExperience(context.Context, *UpdateExperienceRequest) (*Experience, error)
+	UpdateExperience(context.Context, *UpdateExperienceRequest) (*UpdateExperienceResponse, error)
 	GetExperience(context.Context, *GetExperienceRequest) (*Experience, error)
 	DeleteExperience(context.Context, *DeleteExperienceRequest) (*DeleteExperienceResponse, error)
 	mustEmbedUnimplementedExperienceServiceServer()
@@ -97,7 +97,7 @@ type UnimplementedExperienceServiceServer struct {
 func (UnimplementedExperienceServiceServer) CreateExperience(context.Context, *CreateExperienceRequest) (*CreateExperienceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateExperience not implemented")
 }
-func (UnimplementedExperienceServiceServer) UpdateExperience(context.Context, *UpdateExperienceRequest) (*Experience, error) {
+func (UnimplementedExperienceServiceServer) UpdateExperience(context.Context, *UpdateExperienceRequest) (*UpdateExperienceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateExperience not implemented")
 }
 func (UnimplementedExperienceServiceServer) GetExperience(context.Context, *GetExperienceRequest) (*Experience, error) {
