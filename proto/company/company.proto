@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package company;
+
+option go_package = "github.com/students-apply/protos;company";
+
+import "google/protobuf/timestamp.proto";
+
+service CompanyAuthService {
+  rpc SignUp(SignUpRequest) returns (SignUpResponse);
+  rpc SignIn(SignInRequest) returns (TokenResponse);
+  rpc RefreshToken(TokenRequest) returns (TokenResponse);
+}
+
+service CompanyService {
+  rpc GetCompany(CompanyRequest) returns (Company);
+  rpc UpdateCompany(UpdateCompanyRequest) returns (Company);
+  rpc UploadAvatar(UploadAvatarRequest) returns (UploadAvatarResponse);
+}
+
+message SignUpRequest {
+  string name = 1;
+  string description = 2;
+  string email = 3;
+  string password = 4;
+  string number = 5;
+}
+
+message SignUpResponse {
+  string company_id = 1;
+}
+
+message SignInRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message TokenRequest {
+  string refresh_token = 2;
+}
+
+message TokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message Company {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string email = 4;
+  string website = 5;
+  string number = 6;
+  string avatar = 7;
+  string banner = 8;
+  google.protobuf.Timestamp created_at = 9;
+}
+
+message UpdateCompanyRequest {
+  string company_id = 1;
+  string name = 2;
+  string description = 3;
+  string email = 4;
+  string website = 5;
+  string number = 6;
+}
+
+message CompanyRequest {
+  string company_id = 1;
+}
+
+message UploadAvatarRequest {
+  string company_id = 1;
+  string file_name = 2;
+  string content_type = 3;
+  bytes chunk = 4;
+}
+
+message UploadAvatarResponse {}
