@@ -21,7 +21,6 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	ExperienceService_CreateExperience_FullMethodName = "/experience.ExperienceService/CreateExperience"
 	ExperienceService_UpdateExperience_FullMethodName = "/experience.ExperienceService/UpdateExperience"
-	ExperienceService_GetExperience_FullMethodName    = "/experience.ExperienceService/GetExperience"
 	ExperienceService_DeleteExperience_FullMethodName = "/experience.ExperienceService/DeleteExperience"
 )
 
@@ -31,7 +30,6 @@ const (
 type ExperienceServiceClient interface {
 	CreateExperience(ctx context.Context, in *CreateExperienceRequest, opts ...grpc.CallOption) (*CreateExperienceResponse, error)
 	UpdateExperience(ctx context.Context, in *UpdateExperienceRequest, opts ...grpc.CallOption) (*UpdateExperienceResponse, error)
-	GetExperience(ctx context.Context, in *GetExperienceRequest, opts ...grpc.CallOption) (*Experience, error)
 	DeleteExperience(ctx context.Context, in *DeleteExperienceRequest, opts ...grpc.CallOption) (*DeleteExperienceResponse, error)
 }
 
@@ -61,15 +59,6 @@ func (c *experienceServiceClient) UpdateExperience(ctx context.Context, in *Upda
 	return out, nil
 }
 
-func (c *experienceServiceClient) GetExperience(ctx context.Context, in *GetExperienceRequest, opts ...grpc.CallOption) (*Experience, error) {
-	out := new(Experience)
-	err := c.cc.Invoke(ctx, ExperienceService_GetExperience_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *experienceServiceClient) DeleteExperience(ctx context.Context, in *DeleteExperienceRequest, opts ...grpc.CallOption) (*DeleteExperienceResponse, error) {
 	out := new(DeleteExperienceResponse)
 	err := c.cc.Invoke(ctx, ExperienceService_DeleteExperience_FullMethodName, in, out, opts...)
@@ -85,7 +74,6 @@ func (c *experienceServiceClient) DeleteExperience(ctx context.Context, in *Dele
 type ExperienceServiceServer interface {
 	CreateExperience(context.Context, *CreateExperienceRequest) (*CreateExperienceResponse, error)
 	UpdateExperience(context.Context, *UpdateExperienceRequest) (*UpdateExperienceResponse, error)
-	GetExperience(context.Context, *GetExperienceRequest) (*Experience, error)
 	DeleteExperience(context.Context, *DeleteExperienceRequest) (*DeleteExperienceResponse, error)
 	mustEmbedUnimplementedExperienceServiceServer()
 }
@@ -99,9 +87,6 @@ func (UnimplementedExperienceServiceServer) CreateExperience(context.Context, *C
 }
 func (UnimplementedExperienceServiceServer) UpdateExperience(context.Context, *UpdateExperienceRequest) (*UpdateExperienceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateExperience not implemented")
-}
-func (UnimplementedExperienceServiceServer) GetExperience(context.Context, *GetExperienceRequest) (*Experience, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetExperience not implemented")
 }
 func (UnimplementedExperienceServiceServer) DeleteExperience(context.Context, *DeleteExperienceRequest) (*DeleteExperienceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteExperience not implemented")
@@ -155,24 +140,6 @@ func _ExperienceService_UpdateExperience_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperienceService_GetExperience_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetExperienceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperienceServiceServer).GetExperience(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ExperienceService_GetExperience_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperienceServiceServer).GetExperience(ctx, req.(*GetExperienceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _ExperienceService_DeleteExperience_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteExperienceRequest)
 	if err := dec(in); err != nil {
@@ -205,10 +172,6 @@ var ExperienceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateExperience",
 			Handler:    _ExperienceService_UpdateExperience_Handler,
-		},
-		{
-			MethodName: "GetExperience",
-			Handler:    _ExperienceService_GetExperience_Handler,
 		},
 		{
 			MethodName: "DeleteExperience",
