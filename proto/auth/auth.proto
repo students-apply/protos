@@ -9,6 +9,7 @@ import "google/protobuf/timestamp.proto";
 service AuthService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
   rpc SignIn(SignInRequest) returns (TokenResponse);
+  rpc SignOut(TokenRequest) returns (SignOutResponse);
   rpc RefreshToken(TokenRequest) returns (TokenResponse);
   rpc OAuth(OAuthRequest) returns(TokenResponse);
 }
@@ -74,10 +75,12 @@ message UploadAvatarRequest {
   bytes chunk = 4;
 }
 
-message UploadAvatarResponse {}
-
 message OAuthRequest {
   string email = 1;
   string first_name = 2;
   string last_name = 3;
 }
+
+message UploadAvatarResponse {}
+
+message SignOutResponse {}

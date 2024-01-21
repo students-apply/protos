@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	AuthService_SignUp_FullMethodName       = "/auth.AuthService/SignUp"
 	AuthService_SignIn_FullMethodName       = "/auth.AuthService/SignIn"
+	AuthService_SignOut_FullMethodName      = "/auth.AuthService/SignOut"
 	AuthService_RefreshToken_FullMethodName = "/auth.AuthService/RefreshToken"
 	AuthService_OAuth_FullMethodName        = "/auth.AuthService/OAuth"
 )
@@ -31,6 +32,7 @@ const (
 type AuthServiceClient interface {
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error)
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*TokenResponse, error)
+	SignOut(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*SignOutResponse, error)
 	RefreshToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*TokenResponse, error)
 	OAuth(ctx context.Context, in *OAuthRequest, opts ...grpc.CallOption) (*TokenResponse, error)
 }
@@ -61,6 +63,15 @@ func (c *authServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts 
 	return out, nil
 }
 
+func (c *authServiceClient) SignOut(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*SignOutResponse, error) {
+	out := new(SignOutResponse)
+	err := c.cc.Invoke(ctx, AuthService_SignOut_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *authServiceClient) RefreshToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
 	out := new(TokenResponse)
 	err := c.cc.Invoke(ctx, AuthService_RefreshToken_FullMethodName, in, out, opts...)
@@ -85,6 +96,7 @@ func (c *authServiceClient) OAuth(ctx context.Context, in *OAuthRequest, opts ..
 type AuthServiceServer interface {
 	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)
 	SignIn(context.Context, *SignInRequest) (*TokenResponse, error)
+	SignOut(context.Context, *TokenRequest) (*SignOutResponse, error)
 	RefreshToken(context.Context, *TokenRequest) (*TokenResponse, error)
 	OAuth(context.Context, *OAuthRequest) (*TokenResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
@@ -99,6 +111,9 @@ func (UnimplementedAuthServiceServer) SignUp(context.Context, *SignUpRequest) (*
 }
 func (UnimplementedAuthServiceServer) SignIn(context.Context, *SignInRequest) (*TokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
+}
+func (UnimplementedAuthServiceServer) SignOut(context.Context, *TokenRequest) (*SignOutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignOut not implemented")
 }
 func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *TokenRequest) (*TokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
@@ -155,6 +170,24 @@ func _AuthService_SignIn_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_SignOut_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).SignOut(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_SignOut_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).SignOut(ctx, req.(*TokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AuthService_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TokenRequest)
 	if err := dec(in); err != nil {
@@ -205,6 +238,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SignIn",
 			Handler:    _AuthService_SignIn_Handler,
+		},
+		{
+			MethodName: "SignOut",
+			Handler:    _AuthService_SignOut_Handler,
 		},
 		{
 			MethodName: "RefreshToken",
