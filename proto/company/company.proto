@@ -9,6 +9,7 @@ import "google/protobuf/timestamp.proto";
 service CompanyAuthService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
   rpc SignIn(SignInRequest) returns (TokenResponse);
+  rpc SignOut(TokenRequest) returns (SignOutResponse);
   rpc RefreshToken(TokenRequest) returns (TokenResponse);
 }
 
@@ -77,3 +78,5 @@ message UploadAvatarRequest {
 }
 
 message UploadAvatarResponse {}
+
+message SignOutResponse {}

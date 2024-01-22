@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	CompanyAuthService_SignUp_FullMethodName       = "/company.CompanyAuthService/SignUp"
 	CompanyAuthService_SignIn_FullMethodName       = "/company.CompanyAuthService/SignIn"
+	CompanyAuthService_SignOut_FullMethodName      = "/company.CompanyAuthService/SignOut"
 	CompanyAuthService_RefreshToken_FullMethodName = "/company.CompanyAuthService/RefreshToken"
 )
 
@@ -30,6 +31,7 @@ const (
 type CompanyAuthServiceClient interface {
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error)
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*TokenResponse, error)
+	SignOut(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*SignOutResponse, error)
 	RefreshToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*TokenResponse, error)
 }
 
@@ -59,6 +61,15 @@ func (c *companyAuthServiceClient) SignIn(ctx context.Context, in *SignInRequest
 	return out, nil
 }
 
+func (c *companyAuthServiceClient) SignOut(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*SignOutResponse, error) {
+	out := new(SignOutResponse)
+	err := c.cc.Invoke(ctx, CompanyAuthService_SignOut_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *companyAuthServiceClient) RefreshToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
 	out := new(TokenResponse)
 	err := c.cc.Invoke(ctx, CompanyAuthService_RefreshToken_FullMethodName, in, out, opts...)
@@ -74,6 +85,7 @@ func (c *companyAuthServiceClient) RefreshToken(ctx context.Context, in *TokenRe
 type CompanyAuthServiceServer interface {
 	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)
 	SignIn(context.Context, *SignInRequest) (*TokenResponse, error)
+	SignOut(context.Context, *TokenRequest) (*SignOutResponse, error)
 	RefreshToken(context.Context, *TokenRequest) (*TokenResponse, error)
 	mustEmbedUnimplementedCompanyAuthServiceServer()
 }
@@ -87,6 +99,9 @@ func (UnimplementedCompanyAuthServiceServer) SignUp(context.Context, *SignUpRequ
 }
 func (UnimplementedCompanyAuthServiceServer) SignIn(context.Context, *SignInRequest) (*TokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
+}
+func (UnimplementedCompanyAuthServiceServer) SignOut(context.Context, *TokenRequest) (*SignOutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignOut not implemented")
 }
 func (UnimplementedCompanyAuthServiceServer) RefreshToken(context.Context, *TokenRequest) (*TokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
@@ -140,6 +155,24 @@ func _CompanyAuthService_SignIn_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CompanyAuthService_SignOut_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyAuthServiceServer).SignOut(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyAuthService_SignOut_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyAuthServiceServer).SignOut(ctx, req.(*TokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CompanyAuthService_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TokenRequest)
 	if err := dec(in); err != nil {
@@ -172,6 +205,10 @@ var CompanyAuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SignIn",
 			Handler:    _CompanyAuthService_SignIn_Handler,
+		},
+		{
+			MethodName: "SignOut",
+			Handler:    _CompanyAuthService_SignOut_Handler,
 		},
 		{
 			MethodName: "RefreshToken",
