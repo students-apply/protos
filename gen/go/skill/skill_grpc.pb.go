@@ -21,7 +21,6 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	SkillService_CreateSkill_FullMethodName = "/skill.SkillService/CreateSkill"
 	SkillService_UpdateSkill_FullMethodName = "/skill.SkillService/UpdateSkill"
-	SkillService_GetSkill_FullMethodName    = "/skill.SkillService/GetSkill"
 	SkillService_DeleteSkill_FullMethodName = "/skill.SkillService/DeleteSkill"
 )
 
@@ -30,8 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SkillServiceClient interface {
 	CreateSkill(ctx context.Context, in *CreateSkillRequest, opts ...grpc.CallOption) (*CreateSkillResponse, error)
-	UpdateSkill(ctx context.Context, in *UpdateSkillRequest, opts ...grpc.CallOption) (*Skill, error)
-	GetSkill(ctx context.Context, in *GetSkillRequest, opts ...grpc.CallOption) (*Skill, error)
+	UpdateSkill(ctx context.Context, in *UpdateSkillRequest, opts ...grpc.CallOption) (*UpdateSkillResponse, error)
 	DeleteSkill(ctx context.Context, in *DeleteSkillRequest, opts ...grpc.CallOption) (*DeleteSkillResponse, error)
 }
 
@@ -52,18 +50,9 @@ func (c *skillServiceClient) CreateSkill(ctx context.Context, in *CreateSkillReq
 	return out, nil
 }
 
-func (c *skillServiceClient) UpdateSkill(ctx context.Context, in *UpdateSkillRequest, opts ...grpc.CallOption) (*Skill, error) {
-	out := new(Skill)
+func (c *skillServiceClient) UpdateSkill(ctx context.Context, in *UpdateSkillRequest, opts ...grpc.CallOption) (*UpdateSkillResponse, error) {
+	out := new(UpdateSkillResponse)
 	err := c.cc.Invoke(ctx, SkillService_UpdateSkill_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *skillServiceClient) GetSkill(ctx context.Context, in *GetSkillRequest, opts ...grpc.CallOption) (*Skill, error) {
-	out := new(Skill)
-	err := c.cc.Invoke(ctx, SkillService_GetSkill_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +73,7 @@ func (c *skillServiceClient) DeleteSkill(ctx context.Context, in *DeleteSkillReq
 // for forward compatibility
 type SkillServiceServer interface {
 	CreateSkill(context.Context, *CreateSkillRequest) (*CreateSkillResponse, error)
-	UpdateSkill(context.Context, *UpdateSkillRequest) (*Skill, error)
-	GetSkill(context.Context, *GetSkillRequest) (*Skill, error)
+	UpdateSkill(context.Context, *UpdateSkillRequest) (*UpdateSkillResponse, error)
 	DeleteSkill(context.Context, *DeleteSkillRequest) (*DeleteSkillResponse, error)
 	mustEmbedUnimplementedSkillServiceServer()
 }
@@ -97,11 +85,8 @@ type UnimplementedSkillServiceServer struct {
 func (UnimplementedSkillServiceServer) CreateSkill(context.Context, *CreateSkillRequest) (*CreateSkillResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSkill not implemented")
 }
-func (UnimplementedSkillServiceServer) UpdateSkill(context.Context, *UpdateSkillRequest) (*Skill, error) {
+func (UnimplementedSkillServiceServer) UpdateSkill(context.Context, *UpdateSkillRequest) (*UpdateSkillResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSkill not implemented")
-}
-func (UnimplementedSkillServiceServer) GetSkill(context.Context, *GetSkillRequest) (*Skill, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSkill not implemented")
 }
 func (UnimplementedSkillServiceServer) DeleteSkill(context.Context, *DeleteSkillRequest) (*DeleteSkillResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSkill not implemented")
@@ -155,24 +140,6 @@ func _SkillService_UpdateSkill_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SkillService_GetSkill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSkillRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SkillServiceServer).GetSkill(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SkillService_GetSkill_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SkillServiceServer).GetSkill(ctx, req.(*GetSkillRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _SkillService_DeleteSkill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteSkillRequest)
 	if err := dec(in); err != nil {
@@ -205,10 +172,6 @@ var SkillService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSkill",
 			Handler:    _SkillService_UpdateSkill_Handler,
-		},
-		{
-			MethodName: "GetSkill",
-			Handler:    _SkillService_GetSkill_Handler,
 		},
 		{
 			MethodName: "DeleteSkill",

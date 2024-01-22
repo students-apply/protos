@@ -6,14 +6,14 @@ option go_package = "github.com/students-apply/protos;skill";
 
 service SkillService {
   rpc CreateSkill(CreateSkillRequest) returns (CreateSkillResponse);
-  rpc UpdateSkill(UpdateSkillRequest) returns (Skill);
-  rpc GetSkill(GetSkillRequest) returns (Skill);
+  rpc UpdateSkill(UpdateSkillRequest) returns (UpdateSkillResponse);
   rpc DeleteSkill(DeleteSkillRequest) returns (DeleteSkillResponse);
 }
 
 message CreateSkillRequest {
   string resume_id = 1;
-  Skill skill = 2;
+  string user_id = 2;
+  Skill skill = 3;
 }
 
 message CreateSkillResponse {
@@ -21,24 +21,28 @@ message CreateSkillResponse {
 }
 
 message UpdateSkillRequest {
-  string skill_id = 1;
-  string user_id = 2;
-  Skill skill = 3;
+  string resume_id = 1;
+  string skill_id = 2;
+  string user_id = 3;
+  Skill skill = 4;
 }
+
+message UpdateSkillResponse {}
 
 message GetSkillRequest {
   string skill_id = 1;
 }
 
 message DeleteSkillRequest {
-  string skill_id = 1;
-  string user_id = 2;
+  string resume_id = 1;
+  string skill_id = 2;
+  string user_id = 3;
 }
 
 message DeleteSkillResponse {}
 
 message Skill {
-  string resume_id = 1;
+  string skill_id = 1;
   string skill_name = 2;
   float level = 3;
 }
