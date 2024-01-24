@@ -5,7 +5,6 @@ package resume;
 option go_package = "github.com/students-apply/protos;resume";
 import "google/protobuf/timestamp.proto";
 
-
 service ResumeService {
   rpc CreateResume(CreateResumeRequest) returns (CreateResumeResponse);
   rpc UpdateResume(UpdateResumeRequest) returns (UpdateResumeResponse);
@@ -84,4 +83,24 @@ message Resume {
   string phone = 8;
   string city = 9;
   string image = 10;
+  string description = 11;
+  string position = 12;
+  string status = 13;
+  repeated Experience experience = 14;
+  repeated Skill skills = 15;
+}
+
+message Experience {
+  string experience_id = 1;
+  string position = 2;
+  string company = 3;
+  google.protobuf.Timestamp start_date = 4;
+  google.protobuf.Timestamp end_date = 5;
+  string description = 6;
+}
+
+message Skill {
+  string skill_id = 1;
+  string skill_name = 2;
+  float level = 3;
 }
