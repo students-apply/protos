@@ -39,6 +39,7 @@ message GetInternshipsRequest {
 
 message GetInternshipsResponse {
   repeated Internship internships = 1;
+  string cursor = 2;
 }
 
 message Internship {
