@@ -12,3 +12,6 @@ gen-skill:
 
 gen-company:
 	protoc -I proto proto/company/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
+
+gen-internship:
+	protoc -I proto proto/internship/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative

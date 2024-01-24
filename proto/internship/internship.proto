@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package internship;
+
+option go_package = "github.com/students-apply/protos;internship";
+import "google/protobuf/timestamp.proto";
+
+service InternshipService {
+  rpc CreateInternship(CreateInternshipRequest) returns (CreateInternshipResponse);
+  rpc GetInternships(GetInternshipsRequest) returns (GetInternshipsResponse);
+  rpc UpdateInternship(UpdateExperienceRequest) returns (Internship);
+  rpc DeleteInternship(DeleteExperienceRequest) returns (DeleteExperienceResponse);
+}
+
+message CreateInternshipRequest {
+  string company_id = 1;
+  string name = 2;
+  string description = 3;
+  string city = 4;
+  bool is_paid = 5;
+  bool is_active = 6;
+  int32 max_interns = 7;
+  repeated string keywords = 8;
+  google.protobuf.Timestamp created_at = 9;
+}
+
+message CreateInternshipResponse {
+  string id = 1;
+}
+
+message GetInternshipsRequest {
+  string name = 1;
+  string company_id = 2;
+  bool is_paid = 3;
+  bool is_active = 4;
+  int32 max_interns = 5;
+  string keyword = 6;
+}
+
+message GetInternshipsResponse {
+  repeated Internship internships = 1;
+}
+
+message Internship {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string company_id = 4;
+  string city = 5;
+  bool is_paid = 6;
+  bool is_active = 7;
+  int32 max_interns = 8;
+  string attachment = 9;
+  repeated string keywords = 10;
+  google.protobuf.Timestamp created_at = 11;
+}
+
+message UpdateExperienceRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string city = 4;
+  bool is_paid = 5;
+  bool is_active = 6;
+  int32 max_interns = 7;
+  repeated string keywords = 8;
+}
+
+message DeleteExperienceRequest {
+  string id = 1;
+}
+
+message DeleteExperienceResponse {}

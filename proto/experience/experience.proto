@@ -5,14 +5,11 @@ package experience;
 option go_package = "github.com/students-apply/protos;experience";
 import "google/protobuf/timestamp.proto";
 
-
-
 service ExperienceService {
   rpc CreateExperience(CreateExperienceRequest) returns (CreateExperienceResponse);
   rpc UpdateExperience(UpdateExperienceRequest) returns (UpdateExperienceResponse);
   rpc DeleteExperience(DeleteExperienceRequest) returns (DeleteExperienceResponse);
 }
-
 
 message CreateExperienceRequest {
   string resume_id = 1;
@@ -30,7 +27,6 @@ message UpdateExperienceRequest {
   string user_id = 3;
   Experience experience = 4;
 }
-
 
 message GetExperienceRequest {
   string experience_id = 1;
