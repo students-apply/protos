@@ -29,12 +29,13 @@ message CreateInternshipResponse {
 }
 
 message GetInternshipsRequest {
-  string name = 1;
-  string company_id = 2;
-  bool is_paid = 3;
-  bool is_active = 4;
-  int32 max_interns = 5;
-  string keyword = 6;
+  string cursor = 1;
+  string name = 2;
+  string company_id = 3;
+  bool is_paid = 4;
+  bool is_active = 5;
+  int32 max_interns = 6;
+  string keyword = 7;
 }
 
 message GetInternshipsResponse {
@@ -56,18 +57,20 @@ message Internship {
 }
 
 message UpdateExperienceRequest {
-  string id = 1;
-  string name = 2;
-  string description = 3;
-  string city = 4;
-  bool is_paid = 5;
-  bool is_active = 6;
-  int32 max_interns = 7;
-  repeated string keywords = 8;
+  string company_id = 1;
+  string id = 2;
+  string name = 3;
+  string description = 4;
+  string city = 5;
+  bool is_paid = 6;
+  bool is_active = 7;
+  int32 max_interns = 8;
+  repeated string keywords = 9;
 }
 
 message DeleteExperienceRequest {
-  string id = 1;
+  string company_id = 1;
+  string id = 2;
 }
 
 message DeleteExperienceResponse {}
