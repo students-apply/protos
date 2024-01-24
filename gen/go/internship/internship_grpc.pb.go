@@ -31,8 +31,8 @@ const (
 type InternshipServiceClient interface {
 	CreateInternship(ctx context.Context, in *CreateInternshipRequest, opts ...grpc.CallOption) (*CreateInternshipResponse, error)
 	GetInternships(ctx context.Context, in *GetInternshipsRequest, opts ...grpc.CallOption) (*GetInternshipsResponse, error)
-	UpdateInternship(ctx context.Context, in *UpdateExperienceRequest, opts ...grpc.CallOption) (*Internship, error)
-	DeleteInternship(ctx context.Context, in *DeleteExperienceRequest, opts ...grpc.CallOption) (*DeleteExperienceResponse, error)
+	UpdateInternship(ctx context.Context, in *UpdateInternshipRequest, opts ...grpc.CallOption) (*Internship, error)
+	DeleteInternship(ctx context.Context, in *DeleteInternshipRequest, opts ...grpc.CallOption) (*DeleteInternshipResponse, error)
 }
 
 type internshipServiceClient struct {
@@ -61,7 +61,7 @@ func (c *internshipServiceClient) GetInternships(ctx context.Context, in *GetInt
 	return out, nil
 }
 
-func (c *internshipServiceClient) UpdateInternship(ctx context.Context, in *UpdateExperienceRequest, opts ...grpc.CallOption) (*Internship, error) {
+func (c *internshipServiceClient) UpdateInternship(ctx context.Context, in *UpdateInternshipRequest, opts ...grpc.CallOption) (*Internship, error) {
 	out := new(Internship)
 	err := c.cc.Invoke(ctx, InternshipService_UpdateInternship_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -70,8 +70,8 @@ func (c *internshipServiceClient) UpdateInternship(ctx context.Context, in *Upda
 	return out, nil
 }
 
-func (c *internshipServiceClient) DeleteInternship(ctx context.Context, in *DeleteExperienceRequest, opts ...grpc.CallOption) (*DeleteExperienceResponse, error) {
-	out := new(DeleteExperienceResponse)
+func (c *internshipServiceClient) DeleteInternship(ctx context.Context, in *DeleteInternshipRequest, opts ...grpc.CallOption) (*DeleteInternshipResponse, error) {
+	out := new(DeleteInternshipResponse)
 	err := c.cc.Invoke(ctx, InternshipService_DeleteInternship_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -85,8 +85,8 @@ func (c *internshipServiceClient) DeleteInternship(ctx context.Context, in *Dele
 type InternshipServiceServer interface {
 	CreateInternship(context.Context, *CreateInternshipRequest) (*CreateInternshipResponse, error)
 	GetInternships(context.Context, *GetInternshipsRequest) (*GetInternshipsResponse, error)
-	UpdateInternship(context.Context, *UpdateExperienceRequest) (*Internship, error)
-	DeleteInternship(context.Context, *DeleteExperienceRequest) (*DeleteExperienceResponse, error)
+	UpdateInternship(context.Context, *UpdateInternshipRequest) (*Internship, error)
+	DeleteInternship(context.Context, *DeleteInternshipRequest) (*DeleteInternshipResponse, error)
 	mustEmbedUnimplementedInternshipServiceServer()
 }
 
@@ -100,10 +100,10 @@ func (UnimplementedInternshipServiceServer) CreateInternship(context.Context, *C
 func (UnimplementedInternshipServiceServer) GetInternships(context.Context, *GetInternshipsRequest) (*GetInternshipsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInternships not implemented")
 }
-func (UnimplementedInternshipServiceServer) UpdateInternship(context.Context, *UpdateExperienceRequest) (*Internship, error) {
+func (UnimplementedInternshipServiceServer) UpdateInternship(context.Context, *UpdateInternshipRequest) (*Internship, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateInternship not implemented")
 }
-func (UnimplementedInternshipServiceServer) DeleteInternship(context.Context, *DeleteExperienceRequest) (*DeleteExperienceResponse, error) {
+func (UnimplementedInternshipServiceServer) DeleteInternship(context.Context, *DeleteInternshipRequest) (*DeleteInternshipResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteInternship not implemented")
 }
 func (UnimplementedInternshipServiceServer) mustEmbedUnimplementedInternshipServiceServer() {}
@@ -156,7 +156,7 @@ func _InternshipService_GetInternships_Handler(srv interface{}, ctx context.Cont
 }
 
 func _InternshipService_UpdateInternship_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateExperienceRequest)
+	in := new(UpdateInternshipRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -168,13 +168,13 @@ func _InternshipService_UpdateInternship_Handler(srv interface{}, ctx context.Co
 		FullMethod: InternshipService_UpdateInternship_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InternshipServiceServer).UpdateInternship(ctx, req.(*UpdateExperienceRequest))
+		return srv.(InternshipServiceServer).UpdateInternship(ctx, req.(*UpdateInternshipRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _InternshipService_DeleteInternship_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteExperienceRequest)
+	in := new(DeleteInternshipRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -186,7 +186,7 @@ func _InternshipService_DeleteInternship_Handler(srv interface{}, ctx context.Co
 		FullMethod: InternshipService_DeleteInternship_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InternshipServiceServer).DeleteInternship(ctx, req.(*DeleteExperienceRequest))
+		return srv.(InternshipServiceServer).DeleteInternship(ctx, req.(*DeleteInternshipRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
