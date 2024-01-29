@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	InternshipService_CreateInternship_FullMethodName = "/internship.InternshipService/CreateInternship"
+	InternshipService_UploadAttachment_FullMethodName = "/internship.InternshipService/UploadAttachment"
+	InternshipService_DeleteAttachment_FullMethodName = "/internship.InternshipService/DeleteAttachment"
 	InternshipService_GetInternships_FullMethodName   = "/internship.InternshipService/GetInternships"
 	InternshipService_UpdateInternship_FullMethodName = "/internship.InternshipService/UpdateInternship"
 	InternshipService_DeleteInternship_FullMethodName = "/internship.InternshipService/DeleteInternship"
@@ -30,6 +32,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InternshipServiceClient interface {
 	CreateInternship(ctx context.Context, in *CreateInternshipRequest, opts ...grpc.CallOption) (*CreateInternshipResponse, error)
+	UploadAttachment(ctx context.Context, in *UploadAttachmentRequest, opts ...grpc.CallOption) (*UploadAttachmentResponse, error)
+	DeleteAttachment(ctx context.Context, in *DeleteAttachmentRequest, opts ...grpc.CallOption) (*DeleteAttachmentResponse, error)
 	GetInternships(ctx context.Context, in *GetInternshipsRequest, opts ...grpc.CallOption) (*GetInternshipsResponse, error)
 	UpdateInternship(ctx context.Context, in *UpdateInternshipRequest, opts ...grpc.CallOption) (*Internship, error)
 	DeleteInternship(ctx context.Context, in *DeleteInternshipRequest, opts ...grpc.CallOption) (*DeleteInternshipResponse, error)
@@ -46,6 +50,24 @@ func NewInternshipServiceClient(cc grpc.ClientConnInterface) InternshipServiceCl
 func (c *internshipServiceClient) CreateInternship(ctx context.Context, in *CreateInternshipRequest, opts ...grpc.CallOption) (*CreateInternshipResponse, error) {
 	out := new(CreateInternshipResponse)
 	err := c.cc.Invoke(ctx, InternshipService_CreateInternship_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internshipServiceClient) UploadAttachment(ctx context.Context, in *UploadAttachmentRequest, opts ...grpc.CallOption) (*UploadAttachmentResponse, error) {
+	out := new(UploadAttachmentResponse)
+	err := c.cc.Invoke(ctx, InternshipService_UploadAttachment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internshipServiceClient) DeleteAttachment(ctx context.Context, in *DeleteAttachmentRequest, opts ...grpc.CallOption) (*DeleteAttachmentResponse, error) {
+	out := new(DeleteAttachmentResponse)
+	err := c.cc.Invoke(ctx, InternshipService_DeleteAttachment_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,6 +106,8 @@ func (c *internshipServiceClient) DeleteInternship(ctx context.Context, in *Dele
 // for forward compatibility
 type InternshipServiceServer interface {
 	CreateInternship(context.Context, *CreateInternshipRequest) (*CreateInternshipResponse, error)
+	UploadAttachment(context.Context, *UploadAttachmentRequest) (*UploadAttachmentResponse, error)
+	DeleteAttachment(context.Context, *DeleteAttachmentRequest) (*DeleteAttachmentResponse, error)
 	GetInternships(context.Context, *GetInternshipsRequest) (*GetInternshipsResponse, error)
 	UpdateInternship(context.Context, *UpdateInternshipRequest) (*Internship, error)
 	DeleteInternship(context.Context, *DeleteInternshipRequest) (*DeleteInternshipResponse, error)
@@ -96,6 +120,12 @@ type UnimplementedInternshipServiceServer struct {
 
 func (UnimplementedInternshipServiceServer) CreateInternship(context.Context, *CreateInternshipRequest) (*CreateInternshipResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateInternship not implemented")
+}
+func (UnimplementedInternshipServiceServer) UploadAttachment(context.Context, *UploadAttachmentRequest) (*UploadAttachmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadAttachment not implemented")
+}
+func (UnimplementedInternshipServiceServer) DeleteAttachment(context.Context, *DeleteAttachmentRequest) (*DeleteAttachmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAttachment not implemented")
 }
 func (UnimplementedInternshipServiceServer) GetInternships(context.Context, *GetInternshipsRequest) (*GetInternshipsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInternships not implemented")
@@ -133,6 +163,42 @@ func _InternshipService_CreateInternship_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(InternshipServiceServer).CreateInternship(ctx, req.(*CreateInternshipRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternshipService_UploadAttachment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadAttachmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternshipServiceServer).UploadAttachment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternshipService_UploadAttachment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternshipServiceServer).UploadAttachment(ctx, req.(*UploadAttachmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternshipService_DeleteAttachment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAttachmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternshipServiceServer).DeleteAttachment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternshipService_DeleteAttachment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternshipServiceServer).DeleteAttachment(ctx, req.(*DeleteAttachmentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -201,6 +267,14 @@ var InternshipService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateInternship",
 			Handler:    _InternshipService_CreateInternship_Handler,
+		},
+		{
+			MethodName: "UploadAttachment",
+			Handler:    _InternshipService_UploadAttachment_Handler,
+		},
+		{
+			MethodName: "DeleteAttachment",
+			Handler:    _InternshipService_DeleteAttachment_Handler,
 		},
 		{
 			MethodName: "GetInternships",

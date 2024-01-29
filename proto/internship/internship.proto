@@ -7,6 +7,8 @@ import "google/protobuf/timestamp.proto";
 
 service InternshipService {
   rpc CreateInternship(CreateInternshipRequest) returns (CreateInternshipResponse);
+  rpc UploadAttachment(UploadAttachmentRequest) returns (UploadAttachmentResponse);
+  rpc DeleteAttachment(DeleteAttachmentRequest) returns (DeleteAttachmentResponse);
   rpc GetInternships(GetInternshipsRequest) returns (GetInternshipsResponse);
   rpc UpdateInternship(UpdateInternshipRequest) returns (Internship);
   rpc DeleteInternship(DeleteInternshipRequest) returns (DeleteInternshipResponse);
@@ -25,6 +27,24 @@ message CreateInternshipRequest {
 message CreateInternshipResponse {
   string id = 1;
 }
+
+message UploadAttachmentRequest {
+  string company_id = 1;
+  string internship_id = 2;
+  string file_name = 3;
+  string content_type = 4;
+  bytes chunk = 5;
+}
+
+message UploadAttachmentResponse {}
+
+message DeleteAttachmentRequest {
+  string company_id = 1;
+  string internship_id = 2;
+  string file_name = 3;
+}
+
+message DeleteAttachmentResponse {}
 
 message GetInternshipsRequest {
   string cursor = 1;
