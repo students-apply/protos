@@ -223,6 +223,7 @@ const (
 	CompanyService_GetCompany_FullMethodName    = "/company.CompanyService/GetCompany"
 	CompanyService_UpdateCompany_FullMethodName = "/company.CompanyService/UpdateCompany"
 	CompanyService_UploadAvatar_FullMethodName  = "/company.CompanyService/UploadAvatar"
+	CompanyService_UploadBanner_FullMethodName  = "/company.CompanyService/UploadBanner"
 )
 
 // CompanyServiceClient is the client API for CompanyService service.
@@ -231,7 +232,8 @@ const (
 type CompanyServiceClient interface {
 	GetCompany(ctx context.Context, in *CompanyRequest, opts ...grpc.CallOption) (*Company, error)
 	UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*Company, error)
-	UploadAvatar(ctx context.Context, in *UploadAvatarRequest, opts ...grpc.CallOption) (*UploadAvatarResponse, error)
+	UploadAvatar(ctx context.Context, in *UploadImageRequest, opts ...grpc.CallOption) (*UploadImageResponse, error)
+	UploadBanner(ctx context.Context, in *UploadImageRequest, opts ...grpc.CallOption) (*UploadImageResponse, error)
 }
 
 type companyServiceClient struct {
@@ -260,9 +262,18 @@ func (c *companyServiceClient) UpdateCompany(ctx context.Context, in *UpdateComp
 	return out, nil
 }
 
-func (c *companyServiceClient) UploadAvatar(ctx context.Context, in *UploadAvatarRequest, opts ...grpc.CallOption) (*UploadAvatarResponse, error) {
-	out := new(UploadAvatarResponse)
+func (c *companyServiceClient) UploadAvatar(ctx context.Context, in *UploadImageRequest, opts ...grpc.CallOption) (*UploadImageResponse, error) {
+	out := new(UploadImageResponse)
 	err := c.cc.Invoke(ctx, CompanyService_UploadAvatar_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *companyServiceClient) UploadBanner(ctx context.Context, in *UploadImageRequest, opts ...grpc.CallOption) (*UploadImageResponse, error) {
+	out := new(UploadImageResponse)
+	err := c.cc.Invoke(ctx, CompanyService_UploadBanner_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -275,7 +286,8 @@ func (c *companyServiceClient) UploadAvatar(ctx context.Context, in *UploadAvata
 type CompanyServiceServer interface {
 	GetCompany(context.Context, *CompanyRequest) (*Company, error)
 	UpdateCompany(context.Context, *UpdateCompanyRequest) (*Company, error)
-	UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error)
+	UploadAvatar(context.Context, *UploadImageRequest) (*UploadImageResponse, error)
+	UploadBanner(context.Context, *UploadImageRequest) (*UploadImageResponse, error)
 	mustEmbedUnimplementedCompanyServiceServer()
 }
 
@@ -289,8 +301,11 @@ func (UnimplementedCompanyServiceServer) GetCompany(context.Context, *CompanyReq
 func (UnimplementedCompanyServiceServer) UpdateCompany(context.Context, *UpdateCompanyRequest) (*Company, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompany not implemented")
 }
-func (UnimplementedCompanyServiceServer) UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error) {
+func (UnimplementedCompanyServiceServer) UploadAvatar(context.Context, *UploadImageRequest) (*UploadImageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadAvatar not implemented")
+}
+func (UnimplementedCompanyServiceServer) UploadBanner(context.Context, *UploadImageRequest) (*UploadImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadBanner not implemented")
 }
 func (UnimplementedCompanyServiceServer) mustEmbedUnimplementedCompanyServiceServer() {}
 
@@ -342,7 +357,7 @@ func _CompanyService_UpdateCompany_Handler(srv interface{}, ctx context.Context,
 }
 
 func _CompanyService_UploadAvatar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadAvatarRequest)
+	in := new(UploadImageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -354,7 +369,25 @@ func _CompanyService_UploadAvatar_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: CompanyService_UploadAvatar_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CompanyServiceServer).UploadAvatar(ctx, req.(*UploadAvatarRequest))
+		return srv.(CompanyServiceServer).UploadAvatar(ctx, req.(*UploadImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CompanyService_UploadBanner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyServiceServer).UploadBanner(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyService_UploadBanner_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyServiceServer).UploadBanner(ctx, req.(*UploadImageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -377,6 +410,10 @@ var CompanyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadAvatar",
 			Handler:    _CompanyService_UploadAvatar_Handler,
+		},
+		{
+			MethodName: "UploadBanner",
+			Handler:    _CompanyService_UploadBanner_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

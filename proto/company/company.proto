@@ -16,7 +16,8 @@ service CompanyAuthService {
 service CompanyService {
   rpc GetCompany(CompanyRequest) returns (Company);
   rpc UpdateCompany(UpdateCompanyRequest) returns (Company);
-  rpc UploadAvatar(UploadAvatarRequest) returns (UploadAvatarResponse);
+  rpc UploadAvatar(UploadImageRequest) returns (UploadImageResponse);
+  rpc UploadBanner(UploadImageRequest) returns (UploadImageResponse);
 }
 
 message SignUpRequest {
@@ -70,13 +71,13 @@ message CompanyRequest {
   string company_id = 1;
 }
 
-message UploadAvatarRequest {
+message UploadImageRequest {
   string company_id = 1;
   string file_name = 2;
   string content_type = 3;
   bytes chunk = 4;
 }
 
-message UploadAvatarResponse {}
+message UploadImageResponse {}
 
 message SignOutResponse {}
