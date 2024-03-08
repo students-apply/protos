@@ -23,6 +23,7 @@ message CreateInternshipRequest {
   bool is_paid = 5;
   int32 max_interns = 6;
   repeated string keywords = 7;
+  bool is_active = 8;
 }
 
 message CreateInternshipResponse {
