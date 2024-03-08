@@ -10,6 +10,7 @@ service InternshipService {
   rpc UploadAttachment(UploadAttachmentRequest) returns (UploadAttachmentResponse);
   rpc DeleteAttachment(DeleteAttachmentRequest) returns (DeleteAttachmentResponse);
   rpc GetInternships(GetInternshipsRequest) returns (GetInternshipsResponse);
+  rpc GetInternshipByID(GetInternshipRequest) returns (Internship);
   rpc UpdateInternship(UpdateInternshipRequest) returns (Internship);
   rpc DeleteInternship(DeleteInternshipRequest) returns (DeleteInternshipResponse);
 }
@@ -61,6 +62,10 @@ message GetInternshipsRequest {
 message GetInternshipsResponse {
   repeated Internship internships = 1;
   string cursor = 2;
+}
+
+message GetInternshipRequest {
+  string id = 1;
 }
 
 message Internship {
