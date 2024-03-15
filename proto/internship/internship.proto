@@ -75,8 +75,8 @@ message Internship {
   string description = 3;
   string company_id = 4;
   string city = 5;
-  bool is_paid = 6;
-  bool is_active = 7;
+  optional bool is_paid = 6;
+  optional bool is_active = 7;
   int32 max_interns = 8;
   string attachment = 9;
   repeated string keywords = 10;
