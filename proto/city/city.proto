@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package city;
+
+option go_package = "github.com/students-apply/protos;city";
+
+service CityService {
+  rpc GetCities(GetCitiesRequest) returns (GetCitiesResponse);
+}
+
+message City {
+  int64 id = 1;
+  string name = 2;
+}
+
+message Area {
+  int64 id = 1;
+  string name = 2;
+  repeated City cities = 3;
+}
+
+message GetCitiesRequest {}
+
+message GetCitiesResponse {
+  repeated Area areas = 1;
+}

@@ -15,3 +15,6 @@ gen-company:
 
 gen-internship:
 	protoc -I proto proto/internship/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
+
+gen-city:
+	protoc -I proto proto/city/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
