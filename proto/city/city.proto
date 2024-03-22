@@ -6,6 +6,7 @@ option go_package = "github.com/students-apply/protos;city";
 
 service CityService {
   rpc GetCities(GetCitiesRequest) returns (GetCitiesResponse);
+  rpc GetCity(GetCityRequest) returns (GetCityResponse);
 }
 
 message City {
@@ -23,4 +24,14 @@ message GetCitiesRequest {}
 
 message GetCitiesResponse {
   repeated Area areas = 1;
+}
+
+message GetCityRequest {
+  int64 city_id = 1;
+}
+
+message GetCityResponse {
+  int64 id = 1;
+  string name = 2;
+  int64 area_id = 3;
 }
