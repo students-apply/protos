@@ -19,7 +19,7 @@ message CreateInternshipRequest {
   string company_id = 1;
   string name = 2;
   string description = 3;
-  int64 city = 4;
+  int64 city_id = 4;
   bool is_paid = 5;
   int32 max_interns = 6;
   repeated string keywords = 7;
@@ -58,6 +58,7 @@ message GetInternshipsRequest {
   optional bool is_active = 5;
   optional int32 max_interns = 6;
   string keyword = 7;
+  int64 city_id = 8;
 }
 
 message GetInternshipsResponse {
@@ -74,7 +75,7 @@ message Internship {
   string name = 2;
   string description = 3;
   string company_id = 4;
-  int64 city = 5;
+  int64 city_id = 5;
   bool is_paid = 6;
   bool is_active = 7;
   int32 max_interns = 8;
@@ -88,7 +89,7 @@ message UpdateInternshipRequest {
   string id = 2;
   string name = 3;
   string description = 4;
-  int64 city = 5;
+  int64 city_id = 5;
   bool is_paid = 6;
   bool is_active = 7;
   int32 max_interns = 8;
