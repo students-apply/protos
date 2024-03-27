@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package application;
+
+option go_package = "github.com/students-apply/protos;application";
+
+import "google/protobuf/timestamp.proto";
+
+service AuthService {
+  rpc CreateApplication(CreateApplicationRequest) returns (CreateApplicationResponse);
+  rpc GetApplications(GetApplicationsRequest) returns (Applications);
+  rpc UpdateApplication(UpdateApplicationRequest) returns (Application);
+}
+
+message CreateApplicationRequest {
+  string user_id = 1;
+  string resume_id = 2;
+  string internship_id = 3;
+}
+
+message CreateApplicationResponse {
+  int64 id = 1;
+}
+
+message UpdateApplicationRequest {
+  string status = 1;
+}
+
+message Application {
+  int64 id = 1;
+  string user_id = 2;
+  string resume_id = 3;
+  string internship_id = 4;
+  string status = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message GetApplicationsRequest {
+  string user_id = 1;
+}
+
+message Applications {
+  repeated Application applications = 1;
+}
