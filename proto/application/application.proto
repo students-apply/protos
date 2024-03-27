@@ -23,7 +23,8 @@ message CreateApplicationResponse {
 }
 
 message UpdateApplicationRequest {
-  string status = 1;
+  int64 id = 1;
+  string status = 2;
 }
 
 message Application {
