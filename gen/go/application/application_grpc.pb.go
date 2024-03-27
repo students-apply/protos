@@ -19,163 +19,163 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AuthService_CreateApplication_FullMethodName = "/application.AuthService/CreateApplication"
-	AuthService_GetApplications_FullMethodName   = "/application.AuthService/GetApplications"
-	AuthService_UpdateApplication_FullMethodName = "/application.AuthService/UpdateApplication"
+	ApplicationService_CreateApplication_FullMethodName = "/application.ApplicationService/CreateApplication"
+	ApplicationService_GetApplications_FullMethodName   = "/application.ApplicationService/GetApplications"
+	ApplicationService_UpdateApplication_FullMethodName = "/application.ApplicationService/UpdateApplication"
 )
 
-// AuthServiceClient is the client API for AuthService service.
+// ApplicationServiceClient is the client API for ApplicationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuthServiceClient interface {
+type ApplicationServiceClient interface {
 	CreateApplication(ctx context.Context, in *CreateApplicationRequest, opts ...grpc.CallOption) (*CreateApplicationResponse, error)
 	GetApplications(ctx context.Context, in *GetApplicationsRequest, opts ...grpc.CallOption) (*Applications, error)
 	UpdateApplication(ctx context.Context, in *UpdateApplicationRequest, opts ...grpc.CallOption) (*Application, error)
 }
 
-type authServiceClient struct {
+type applicationServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
-	return &authServiceClient{cc}
+func NewApplicationServiceClient(cc grpc.ClientConnInterface) ApplicationServiceClient {
+	return &applicationServiceClient{cc}
 }
 
-func (c *authServiceClient) CreateApplication(ctx context.Context, in *CreateApplicationRequest, opts ...grpc.CallOption) (*CreateApplicationResponse, error) {
+func (c *applicationServiceClient) CreateApplication(ctx context.Context, in *CreateApplicationRequest, opts ...grpc.CallOption) (*CreateApplicationResponse, error) {
 	out := new(CreateApplicationResponse)
-	err := c.cc.Invoke(ctx, AuthService_CreateApplication_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, ApplicationService_CreateApplication_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) GetApplications(ctx context.Context, in *GetApplicationsRequest, opts ...grpc.CallOption) (*Applications, error) {
+func (c *applicationServiceClient) GetApplications(ctx context.Context, in *GetApplicationsRequest, opts ...grpc.CallOption) (*Applications, error) {
 	out := new(Applications)
-	err := c.cc.Invoke(ctx, AuthService_GetApplications_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, ApplicationService_GetApplications_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) UpdateApplication(ctx context.Context, in *UpdateApplicationRequest, opts ...grpc.CallOption) (*Application, error) {
+func (c *applicationServiceClient) UpdateApplication(ctx context.Context, in *UpdateApplicationRequest, opts ...grpc.CallOption) (*Application, error) {
 	out := new(Application)
-	err := c.cc.Invoke(ctx, AuthService_UpdateApplication_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, ApplicationService_UpdateApplication_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthServiceServer is the server API for AuthService service.
-// All implementations must embed UnimplementedAuthServiceServer
+// ApplicationServiceServer is the server API for ApplicationService service.
+// All implementations must embed UnimplementedApplicationServiceServer
 // for forward compatibility
-type AuthServiceServer interface {
+type ApplicationServiceServer interface {
 	CreateApplication(context.Context, *CreateApplicationRequest) (*CreateApplicationResponse, error)
 	GetApplications(context.Context, *GetApplicationsRequest) (*Applications, error)
 	UpdateApplication(context.Context, *UpdateApplicationRequest) (*Application, error)
-	mustEmbedUnimplementedAuthServiceServer()
+	mustEmbedUnimplementedApplicationServiceServer()
 }
 
-// UnimplementedAuthServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedAuthServiceServer struct {
+// UnimplementedApplicationServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedApplicationServiceServer struct {
 }
 
-func (UnimplementedAuthServiceServer) CreateApplication(context.Context, *CreateApplicationRequest) (*CreateApplicationResponse, error) {
+func (UnimplementedApplicationServiceServer) CreateApplication(context.Context, *CreateApplicationRequest) (*CreateApplicationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateApplication not implemented")
 }
-func (UnimplementedAuthServiceServer) GetApplications(context.Context, *GetApplicationsRequest) (*Applications, error) {
+func (UnimplementedApplicationServiceServer) GetApplications(context.Context, *GetApplicationsRequest) (*Applications, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplications not implemented")
 }
-func (UnimplementedAuthServiceServer) UpdateApplication(context.Context, *UpdateApplicationRequest) (*Application, error) {
+func (UnimplementedApplicationServiceServer) UpdateApplication(context.Context, *UpdateApplicationRequest) (*Application, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateApplication not implemented")
 }
-func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
+func (UnimplementedApplicationServiceServer) mustEmbedUnimplementedApplicationServiceServer() {}
 
-// UnsafeAuthServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuthServiceServer will
+// UnsafeApplicationServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ApplicationServiceServer will
 // result in compilation errors.
-type UnsafeAuthServiceServer interface {
-	mustEmbedUnimplementedAuthServiceServer()
+type UnsafeApplicationServiceServer interface {
+	mustEmbedUnimplementedApplicationServiceServer()
 }
 
-func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
-	s.RegisterService(&AuthService_ServiceDesc, srv)
+func RegisterApplicationServiceServer(s grpc.ServiceRegistrar, srv ApplicationServiceServer) {
+	s.RegisterService(&ApplicationService_ServiceDesc, srv)
 }
 
-func _AuthService_CreateApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ApplicationService_CreateApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateApplicationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).CreateApplication(ctx, in)
+		return srv.(ApplicationServiceServer).CreateApplication(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_CreateApplication_FullMethodName,
+		FullMethod: ApplicationService_CreateApplication_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).CreateApplication(ctx, req.(*CreateApplicationRequest))
+		return srv.(ApplicationServiceServer).CreateApplication(ctx, req.(*CreateApplicationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_GetApplications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ApplicationService_GetApplications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetApplicationsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).GetApplications(ctx, in)
+		return srv.(ApplicationServiceServer).GetApplications(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_GetApplications_FullMethodName,
+		FullMethod: ApplicationService_GetApplications_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).GetApplications(ctx, req.(*GetApplicationsRequest))
+		return srv.(ApplicationServiceServer).GetApplications(ctx, req.(*GetApplicationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_UpdateApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ApplicationService_UpdateApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateApplicationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).UpdateApplication(ctx, in)
+		return srv.(ApplicationServiceServer).UpdateApplication(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_UpdateApplication_FullMethodName,
+		FullMethod: ApplicationService_UpdateApplication_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).UpdateApplication(ctx, req.(*UpdateApplicationRequest))
+		return srv.(ApplicationServiceServer).UpdateApplication(ctx, req.(*UpdateApplicationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
+// ApplicationService_ServiceDesc is the grpc.ServiceDesc for ApplicationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AuthService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "application.AuthService",
-	HandlerType: (*AuthServiceServer)(nil),
+var ApplicationService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "application.ApplicationService",
+	HandlerType: (*ApplicationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateApplication",
-			Handler:    _AuthService_CreateApplication_Handler,
+			Handler:    _ApplicationService_CreateApplication_Handler,
 		},
 		{
 			MethodName: "GetApplications",
-			Handler:    _AuthService_GetApplications_Handler,
+			Handler:    _ApplicationService_GetApplications_Handler,
 		},
 		{
 			MethodName: "UpdateApplication",
-			Handler:    _AuthService_UpdateApplication_Handler,
+			Handler:    _ApplicationService_UpdateApplication_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -6,7 +6,7 @@ option go_package = "github.com/students-apply/protos;application";
 
 import "google/protobuf/timestamp.proto";
 
-service AuthService {
+service ApplicationService {
   rpc CreateApplication(CreateApplicationRequest) returns (CreateApplicationResponse);
   rpc GetApplications(GetApplicationsRequest) returns (Applications);
   rpc UpdateApplication(UpdateApplicationRequest) returns (Application);
