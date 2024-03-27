@@ -69,7 +69,7 @@ message ShortResume {
   google.protobuf.Timestamp birthday = 4;
   string email = 5;
   string phone = 6;
-  string city = 7;
+  int32 city = 7;
   string description = 8;
   string position = 9;
   string status = 10;
@@ -84,7 +84,7 @@ message Resume {
   google.protobuf.Timestamp birthday = 6;
   string email = 7;
   string phone = 8;
-  string city = 9;
+  int32 city = 9;
   string image = 10;
   string description = 11;
   string position = 12;
