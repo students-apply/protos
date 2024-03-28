@@ -22,6 +22,7 @@ const (
 	ApplicationService_CreateApplication_FullMethodName = "/application.ApplicationService/CreateApplication"
 	ApplicationService_GetApplications_FullMethodName   = "/application.ApplicationService/GetApplications"
 	ApplicationService_UpdateApplication_FullMethodName = "/application.ApplicationService/UpdateApplication"
+	ApplicationService_DeleteApplication_FullMethodName = "/application.ApplicationService/DeleteApplication"
 )
 
 // ApplicationServiceClient is the client API for ApplicationService service.
@@ -31,6 +32,7 @@ type ApplicationServiceClient interface {
 	CreateApplication(ctx context.Context, in *CreateApplicationRequest, opts ...grpc.CallOption) (*CreateApplicationResponse, error)
 	GetApplications(ctx context.Context, in *GetApplicationsRequest, opts ...grpc.CallOption) (*Applications, error)
 	UpdateApplication(ctx context.Context, in *UpdateApplicationRequest, opts ...grpc.CallOption) (*Application, error)
+	DeleteApplication(ctx context.Context, in *DeleteApplicationRequest, opts ...grpc.CallOption) (*DeleteApplicationResponse, error)
 }
 
 type applicationServiceClient struct {
@@ -68,6 +70,15 @@ func (c *applicationServiceClient) UpdateApplication(ctx context.Context, in *Up
 	return out, nil
 }
 
+func (c *applicationServiceClient) DeleteApplication(ctx context.Context, in *DeleteApplicationRequest, opts ...grpc.CallOption) (*DeleteApplicationResponse, error) {
+	out := new(DeleteApplicationResponse)
+	err := c.cc.Invoke(ctx, ApplicationService_DeleteApplication_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ApplicationServiceServer is the server API for ApplicationService service.
 // All implementations must embed UnimplementedApplicationServiceServer
 // for forward compatibility
@@ -75,6 +86,7 @@ type ApplicationServiceServer interface {
 	CreateApplication(context.Context, *CreateApplicationRequest) (*CreateApplicationResponse, error)
 	GetApplications(context.Context, *GetApplicationsRequest) (*Applications, error)
 	UpdateApplication(context.Context, *UpdateApplicationRequest) (*Application, error)
+	DeleteApplication(context.Context, *DeleteApplicationRequest) (*DeleteApplicationResponse, error)
 	mustEmbedUnimplementedApplicationServiceServer()
 }
 
@@ -90,6 +102,9 @@ func (UnimplementedApplicationServiceServer) GetApplications(context.Context, *G
 }
 func (UnimplementedApplicationServiceServer) UpdateApplication(context.Context, *UpdateApplicationRequest) (*Application, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateApplication not implemented")
+}
+func (UnimplementedApplicationServiceServer) DeleteApplication(context.Context, *DeleteApplicationRequest) (*DeleteApplicationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteApplication not implemented")
 }
 func (UnimplementedApplicationServiceServer) mustEmbedUnimplementedApplicationServiceServer() {}
 
@@ -158,6 +173,24 @@ func _ApplicationService_UpdateApplication_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ApplicationService_DeleteApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).DeleteApplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApplicationService_DeleteApplication_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).DeleteApplication(ctx, req.(*DeleteApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ApplicationService_ServiceDesc is the grpc.ServiceDesc for ApplicationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +209,10 @@ var ApplicationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateApplication",
 			Handler:    _ApplicationService_UpdateApplication_Handler,
+		},
+		{
+			MethodName: "DeleteApplication",
+			Handler:    _ApplicationService_DeleteApplication_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

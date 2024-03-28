@@ -10,6 +10,7 @@ service ApplicationService {
   rpc CreateApplication(CreateApplicationRequest) returns (CreateApplicationResponse);
   rpc GetApplications(GetApplicationsRequest) returns (Applications);
   rpc UpdateApplication(UpdateApplicationRequest) returns (Application);
+  rpc DeleteApplication(DeleteApplicationRequest) returns (DeleteApplicationResponse);
 }
 
 message CreateApplicationRequest {
@@ -45,3 +46,10 @@ message GetApplicationsRequest {
 message Applications {
   repeated Application applications = 1;
 }
+
+message DeleteApplicationRequest {
+  int64 id = 1;
+  string user_id = 2;
+}
+
+message DeleteApplicationResponse {}
