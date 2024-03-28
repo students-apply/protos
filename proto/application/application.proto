@@ -24,7 +24,8 @@ message CreateApplicationResponse {
 
 message UpdateApplicationRequest {
   int64 id = 1;
-  string status = 2;
+  string company_id = 2;
+  string status = 3;
 }
 
 message Application {
