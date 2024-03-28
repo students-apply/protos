@@ -73,6 +73,7 @@ message ShortResume {
   string description = 8;
   string position = 9;
   string status = 10;
+  int64 views = 11;
 }
 
 message Resume {
@@ -91,6 +92,7 @@ message Resume {
   string status = 13;
   repeated Experience experience = 14;
   repeated Skill skills = 15;
+  int64 views = 16;
 }
 
 message Experience {
