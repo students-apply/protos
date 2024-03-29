@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package view;
+
+option go_package = "github.com/students-apply/protos;view";
+import "google/protobuf/timestamp.proto";
+
+service ViewService {
+  rpc CreateView(CreateViewRequest) returns (CreateViewResponse);
+  rpc GetResumeViews(GetResumeViewsRequest) returns (GetResumeViewsResponse);
+
+}
+
+message CreateViewRequest {
+  string resume_id = 1;
+  string company_id = 2;
+  google.protobuf.Timestamp viewed_at = 3;
+}
+
+message CreateViewResponse {}
+
+message GetResumeViewsRequest {
+  string cursor = 1;
+  string resume_id = 2;
+}
+
+message GetResumeViewsResponse {
+  repeated View views = 1;
+  string cursor = 2;
+}
+
+message View {
+  string view_id = 1;
+  string resume_id = 2;
+  string company_id = 3;
+  google.protobuf.Timestamp viewed_at = 4;
+}

@@ -21,3 +21,8 @@ gen-city:
 
 gen-application:
 	protoc -I proto proto/application/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
+
+gen-view:
+	protoc -I proto proto/view/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
+
+
