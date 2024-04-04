@@ -17,7 +17,9 @@ message CreateViewRequest {
   google.protobuf.Timestamp viewed_at = 3;
 }
 
-message CreateViewResponse {}
+message CreateViewResponse {
+  string view_id = 1;
+}
 
 message GetResumeViewsRequest {
   string cursor = 1;
