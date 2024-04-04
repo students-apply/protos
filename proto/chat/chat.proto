@@ -1,0 +1,144 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "github.com/students-apply/protos;chat";
+
+import "google/protobuf/timestamp.proto";
+
+service UserChatService {
+  rpc CreateChat(CreateUserChatRequest) returns (CreateUserChatResponse);
+  rpc GetChats(GetUserChatsRequest) returns (Chats);
+  rpc DeleteChat(DeleteUserChatRequest) returns (DeleteUserChatResponse);
+  rpc CreateUserMessage(CreateUserMessageRequest) returns (CreateUserMessageResponse);
+  rpc UpdateUserMessage(UpdateUserMessageRequest) returns (UpdateUserMessageResponse);
+  rpc DeleteUserMessage(DeleteUserMessageRequest) returns (DeleteUserMessageResponse);
+  rpc ViewMessage(ViewUserMessageRequest) returns (ViewUserMessageResponse);
+}
+
+service CompanyChatService {
+  rpc CreateChat(CreateCompanyChatRequest) returns (CreateCompanyChatResponse);
+  rpc GetChats(GetCompanyChatsRequest) returns (Chats);
+  rpc DeleteChat(DeleteCompanyChatRequest) returns (DeleteCompanyChatResponse);
+  rpc CreateUserMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
+  rpc UpdateUserMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
+  rpc DeleteUserMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
+  rpc ViewMessage(ViewCompanyMessageRequest) returns (ViewCompanyMessageResponse);
+}
+
+message CreateUserChatRequest {
+  string user_id = 1;
+  string application_id = 2;
+}
+
+message CreateUserChatResponse {
+  string id = 1;
+}
+
+message Chat {
+  string id = 1;
+  int64 application_id = 2;
+  google.protobuf.Timestamp created_at = 3;
+}
+
+message GetUserChatsRequest {
+  string user_id = 1;
+}
+
+message Chats {
+  repeated Chat chats = 1;
+}
+
+message DeleteUserChatRequest {
+  string id = 1;
+  string user_id = 2;
+}
+
+message DeleteUserChatResponse {}
+
+message CreateCompanyChatRequest {
+  string company_id = 1;
+  string application_id = 2;
+}
+
+message CreateCompanyChatResponse {
+  string id = 1;
+}
+
+message GetCompanyChatsRequest {
+  string company_id = 1;
+}
+
+message DeleteCompanyChatRequest {
+  string id = 1;
+  string company_id = 2;
+}
+
+message DeleteCompanyChatResponse {}
+
+message CreateUserMessageRequest {
+  string chat_id = 1;
+  string user_id = 2;
+  string text = 3;
+}
+
+message CreateUserMessageResponse {
+  int64 id = 1;
+}
+
+message UpdateUserMessageRequest {
+  int64 message_id = 1;
+  string user_id = 2;
+  string text = 3;
+}
+
+message UpdateUserMessageResponse {}
+
+message DeleteUserMessageRequest {
+  int64 message_id = 1;
+  string user_id = 2;
+}
+
+message DeleteUserMessageResponse {}
+
+message ViewUserMessageRequest {
+  int64 message_id = 1;
+  string user_id = 2;
+}
+
+message ViewUserMessageResponse {}
+
+message CreateCompanyMessageRequest {
+  string chat_id = 1;
+  string company_id = 2;
+  string text = 3;
+}
+
+message CreateCompanyMessageResponse {
+  int64 id = 1;
+}
+
+message UpdateCompanyMessageRequest {
+  int64 message_id = 1;
+  string chat_id = 2;
+  string company_id = 3;
+  string text = 4;
+}
+
+message UpdateCompanyMessageResponse {}
+
+message DeleteCompanyMessageRequest {
+  int64 message_id = 1;
+  string chat_id = 2;
+  string company_id = 3;
+}
+
+message DeleteCompanyMessageResponse {}
+
+message ViewCompanyMessageRequest {
+  int64 message_id = 1;
+  string chat_id = 2;
+  string company_id = 3;
+}
+
+message ViewCompanyMessageResponse {}
