@@ -28,11 +28,13 @@ service CompanyChatService {
 
 message CreateUserChatRequest {
   string user_id = 1;
-  string application_id = 2;
+  string company_id = 2;
+  int64 application_id = 3;
 }
 
 message CreateUserChatResponse {
   string id = 1;
+  string chat_id = 2;
 }
 
 message Chat {
@@ -57,12 +59,14 @@ message DeleteUserChatRequest {
 message DeleteUserChatResponse {}
 
 message CreateCompanyChatRequest {
-  string company_id = 1;
-  string application_id = 2;
+  string user_id = 1;
+  string company_id = 2;
+  int64 application_id = 3;
 }
 
 message CreateCompanyChatResponse {
   string id = 1;
+  string chat_id = 2;
 }
 
 message GetCompanyChatsRequest {
