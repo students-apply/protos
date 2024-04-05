@@ -10,9 +10,9 @@ service UserChatService {
   rpc CreateChat(CreateUserChatRequest) returns (CreateUserChatResponse);
   rpc GetChats(GetUserChatsRequest) returns (Chats);
   rpc DeleteChat(DeleteUserChatRequest) returns (DeleteUserChatResponse);
-  rpc CreateUserMessage(CreateUserMessageRequest) returns (CreateUserMessageResponse);
-  rpc UpdateUserMessage(UpdateUserMessageRequest) returns (UpdateUserMessageResponse);
-  rpc DeleteUserMessage(DeleteUserMessageRequest) returns (DeleteUserMessageResponse);
+  rpc CreateMessage(CreateUserMessageRequest) returns (CreateUserMessageResponse);
+  rpc UpdateMessage(UpdateUserMessageRequest) returns (UpdateUserMessageResponse);
+  rpc DeleteMessage(DeleteUserMessageRequest) returns (DeleteUserMessageResponse);
   rpc ViewMessage(ViewUserMessageRequest) returns (ViewUserMessageResponse);
 }
 
@@ -20,9 +20,9 @@ service CompanyChatService {
   rpc CreateChat(CreateCompanyChatRequest) returns (CreateCompanyChatResponse);
   rpc GetChats(GetCompanyChatsRequest) returns (Chats);
   rpc DeleteChat(DeleteCompanyChatRequest) returns (DeleteCompanyChatResponse);
-  rpc CreateUserMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
-  rpc UpdateUserMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
-  rpc DeleteUserMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
+  rpc CreateMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
+  rpc UpdateMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
+  rpc DeleteMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
   rpc ViewMessage(ViewCompanyMessageRequest) returns (ViewCompanyMessageResponse);
 }
 
