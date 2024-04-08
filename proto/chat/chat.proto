@@ -11,9 +11,10 @@ service UserChatService {
   rpc GetChats(GetUserChatsRequest) returns (Chats);
   rpc DeleteChat(DeleteUserChatRequest) returns (DeleteUserChatResponse);
   rpc CreateMessage(CreateUserMessageRequest) returns (CreateUserMessageResponse);
-  rpc UpdateMessage(UpdateUserMessageRequest) returns (UpdateUserMessageResponse);
+  rpc GetMessages(GetUserMessagesRequest) returns (Messages);
+  rpc UpdateMessage(UpdateUserMessageRequest) returns (Message);
   rpc DeleteMessage(DeleteUserMessageRequest) returns (DeleteUserMessageResponse);
-  rpc ViewMessage(ViewUserMessageRequest) returns (ViewUserMessageResponse);
+  rpc ViewMessage(ViewUserMessageRequest) returns (Message);
 }
 
 service CompanyChatService {
@@ -21,9 +22,10 @@ service CompanyChatService {
   rpc GetChats(GetCompanyChatsRequest) returns (Chats);
   rpc DeleteChat(DeleteCompanyChatRequest) returns (DeleteCompanyChatResponse);
   rpc CreateMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
-  rpc UpdateMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
-  rpc DeleteMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
-  rpc ViewMessage(ViewCompanyMessageRequest) returns (ViewCompanyMessageResponse);
+  rpc GetMessages(GetCompanyMessagesRequest) returns (Messages);
+  rpc UpdateMessage(CreateCompanyMessageRequest) returns (Message);
+  rpc DeleteMessage(CreateCompanyMessageRequest) returns (DeleteCompanyMessageResponse);
+  rpc ViewMessage(ViewCompanyMessageRequest) returns (Message);
 }
 
 message CreateUserChatRequest {
@@ -82,6 +84,11 @@ message DeleteCompanyChatRequest {
 
 message DeleteCompanyChatResponse {}
 
+message GetUserMessagesRequest {
+  string chat_id = 1;
+  string user_id = 2;
+}
+
 message CreateUserMessageRequest {
   string chat_id = 1;
   string user_id = 2;
@@ -98,8 +105,6 @@ message UpdateUserMessageRequest {
   string text = 3;
 }
 
-message UpdateUserMessageResponse {}
-
 message DeleteUserMessageRequest {
   int64 message_id = 1;
   string user_id = 2;
@@ -112,7 +117,10 @@ message ViewUserMessageRequest {
   string user_id = 2;
 }
 
-message ViewUserMessageResponse {}
+message GetCompanyMessagesRequest {
+  string chat_id = 1;
+  string company_id = 2;
+}
 
 message CreateCompanyMessageRequest {
   string chat_id = 1;
@@ -131,8 +139,6 @@ message UpdateCompanyMessageRequest {
   string text = 4;
 }
 
-message UpdateCompanyMessageResponse {}
-
 message DeleteCompanyMessageRequest {
   int64 message_id = 1;
   string chat_id = 2;
@@ -147,4 +153,17 @@ message ViewCompanyMessageRequest {
   string company_id = 3;
 }
 
-message ViewCompanyMessageResponse {}
+message Message {
+  int64 id = 1;
+  string chat_id = 2;
+  string senderType = 3;
+  string type = 4;
+  string text = 5;
+  bool is_viewed = 6;
+  bool is_edited = 7;
+  google.protobuf.Timestamp created_at = 8;
+}
+
+message Messages {
+  repeated Message messages = 1;
+}
