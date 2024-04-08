@@ -23,8 +23,8 @@ service CompanyChatService {
   rpc DeleteChat(DeleteCompanyChatRequest) returns (DeleteCompanyChatResponse);
   rpc CreateMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
   rpc GetMessages(GetCompanyMessagesRequest) returns (Messages);
-  rpc UpdateMessage(CreateCompanyMessageRequest) returns (Message);
-  rpc DeleteMessage(CreateCompanyMessageRequest) returns (DeleteCompanyMessageResponse);
+  rpc UpdateMessage(UpdateCompanyMessageRequest) returns (Message);
+  rpc DeleteMessage(DeleteCompanyMessageRequest) returns (DeleteCompanyMessageResponse);
   rpc ViewMessage(ViewCompanyMessageRequest) returns (Message);
 }
 
