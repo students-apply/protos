@@ -108,7 +108,8 @@ message UpdateUserMessageRequest {
 
 message DeleteUserMessageRequest {
   int64 message_id = 1;
-  string user_id = 2;
+  string chat_id = 2;
+  string user_id = 3;
 }
 
 message DeleteUserMessageResponse {}
