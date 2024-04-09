@@ -36,7 +36,6 @@ message CreateUserChatRequest {
 
 message CreateUserChatResponse {
   string id = 1;
-  string chat_id = 2;
 }
 
 message Chat {
@@ -70,7 +69,6 @@ message CreateCompanyChatRequest {
 
 message CreateCompanyChatResponse {
   string id = 1;
-  string chat_id = 2;
 }
 
 message GetCompanyChatsRequest {
