@@ -16,7 +16,8 @@ service ApplicationService {
 message CreateApplicationRequest {
   string user_id = 1;
   string resume_id = 2;
-  string internship_id = 3;
+  string cover_letter = 3;
+  string internship_id = 4;
 }
 
 message CreateApplicationResponse {
