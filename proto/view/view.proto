@@ -29,6 +29,7 @@ message GetResumeViewsRequest {
 message GetResumeViewsResponse {
   repeated View views = 1;
   string cursor = 2;
+  int32 total = 3;
 }
 
 message View {
