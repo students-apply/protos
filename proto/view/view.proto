@@ -14,7 +14,6 @@ service ViewService {
 message CreateViewRequest {
   string resume_id = 1;
   string company_id = 2;
-  google.protobuf.Timestamp viewed_at = 3;
 }
 
 message CreateViewResponse {
