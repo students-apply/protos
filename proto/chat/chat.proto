@@ -32,6 +32,7 @@ message CreateUserChatRequest {
   string user_id = 1;
   string company_id = 2;
   int64 application_id = 3;
+  string internship_id = 4;
 }
 
 message CreateUserChatResponse {
@@ -43,7 +44,8 @@ message Chat {
   string user_id = 2;
   string company_id = 3;
   int64 application_id = 4;
-  google.protobuf.Timestamp created_at = 5;
+  string internship_id = 5;
+  google.protobuf.Timestamp created_at = 6;
 }
 
 message GetUserChatsRequest {
@@ -60,27 +62,6 @@ message DeleteUserChatRequest {
 }
 
 message DeleteUserChatResponse {}
-
-message CreateCompanyChatRequest {
-  string user_id = 1;
-  string company_id = 2;
-  int64 application_id = 3;
-}
-
-message CreateCompanyChatResponse {
-  string id = 1;
-}
-
-message GetCompanyChatsRequest {
-  string company_id = 1;
-}
-
-message DeleteCompanyChatRequest {
-  string id = 1;
-  string company_id = 2;
-}
-
-message DeleteCompanyChatResponse {}
 
 message GetUserMessagesRequest {
   string chat_id = 1;
@@ -117,6 +98,28 @@ message ViewUserMessageRequest {
   string chat_id = 2;
   string user_id = 3;
 }
+
+message CreateCompanyChatRequest {
+  string user_id = 1;
+  string company_id = 2;
+  int64 application_id = 3;
+  string internship_id = 4;
+}
+
+message CreateCompanyChatResponse {
+  string id = 1;
+}
+
+message GetCompanyChatsRequest {
+  string company_id = 1;
+}
+
+message DeleteCompanyChatRequest {
+  string id = 1;
+  string company_id = 2;
+}
+
+message DeleteCompanyChatResponse {}
 
 message GetCompanyMessagesRequest {
   string chat_id = 1;
