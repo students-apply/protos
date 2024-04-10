@@ -12,6 +12,7 @@ service ResumeService {
   rpc GetUserResumes(GetUserResumesRequest) returns (GetUserResumesResponse);
   rpc DeleteResume(DeleteResumeRequest) returns (DeleteResumeResponse);
   rpc UploadImage(UploadImageRequest) returns (UploadImageResponse);
+  rpc SearchResume(SearchResumeRequest) returns (SearchResumeResponse);
 }
 
 message CreateResumeRequest {
@@ -61,6 +62,14 @@ message UploadImageRequest {
 }
 
 message UploadImageResponse {}
+
+message SearchResumeRequest {
+  string text = 1;
+}
+
+message SearchResumeResponse {
+  repeated Resume resumes = 1;
+}
 
 message ShortResume {
   string first_name = 1;
