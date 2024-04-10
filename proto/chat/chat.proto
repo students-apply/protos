@@ -160,12 +160,13 @@ message ViewCompanyMessageRequest {
 message Message {
   int64 id = 1;
   string chat_id = 2;
-  string senderType = 3;
-  string type = 4;
-  string text = 5;
-  bool is_viewed = 6;
-  bool is_edited = 7;
-  google.protobuf.Timestamp created_at = 8;
+  string sender_id = 3;
+  string sender_type = 4;
+  string type = 5;
+  string text = 6;
+  bool is_viewed = 7;
+  bool is_edited = 8;
+  google.protobuf.Timestamp created_at = 9;
 }
 
 message Messages {
