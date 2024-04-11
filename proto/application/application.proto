@@ -26,7 +26,8 @@ message CreateApplicationResponse {
 }
 
 message GetApplicationByIDRequest {
-  int64 id = 1;
+  string user_id = 1;
+  int64 id = 2;
 }
 
 message UpdateApplicationRequest {
