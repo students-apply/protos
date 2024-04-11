@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ApplicationService_CreateApplication_FullMethodName = "/application.ApplicationService/CreateApplication"
-	ApplicationService_GetApplications_FullMethodName   = "/application.ApplicationService/GetApplications"
-	ApplicationService_UpdateApplication_FullMethodName = "/application.ApplicationService/UpdateApplication"
-	ApplicationService_DeleteApplication_FullMethodName = "/application.ApplicationService/DeleteApplication"
+	ApplicationService_CreateApplication_FullMethodName  = "/application.ApplicationService/CreateApplication"
+	ApplicationService_GetApplicationByID_FullMethodName = "/application.ApplicationService/GetApplicationByID"
+	ApplicationService_GetApplications_FullMethodName    = "/application.ApplicationService/GetApplications"
+	ApplicationService_UpdateApplication_FullMethodName  = "/application.ApplicationService/UpdateApplication"
+	ApplicationService_DeleteApplication_FullMethodName  = "/application.ApplicationService/DeleteApplication"
 )
 
 // ApplicationServiceClient is the client API for ApplicationService service.
@@ -30,6 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ApplicationServiceClient interface {
 	CreateApplication(ctx context.Context, in *CreateApplicationRequest, opts ...grpc.CallOption) (*CreateApplicationResponse, error)
+	GetApplicationByID(ctx context.Context, in *GetApplicationByIDRequest, opts ...grpc.CallOption) (*Application, error)
 	GetApplications(ctx context.Context, in *GetApplicationsRequest, opts ...grpc.CallOption) (*Applications, error)
 	UpdateApplication(ctx context.Context, in *UpdateApplicationRequest, opts ...grpc.CallOption) (*Application, error)
 	DeleteApplication(ctx context.Context, in *DeleteApplicationRequest, opts ...grpc.CallOption) (*DeleteApplicationResponse, error)
@@ -46,6 +48,15 @@ func NewApplicationServiceClient(cc grpc.ClientConnInterface) ApplicationService
 func (c *applicationServiceClient) CreateApplication(ctx context.Context, in *CreateApplicationRequest, opts ...grpc.CallOption) (*CreateApplicationResponse, error) {
 	out := new(CreateApplicationResponse)
 	err := c.cc.Invoke(ctx, ApplicationService_CreateApplication_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *applicationServiceClient) GetApplicationByID(ctx context.Context, in *GetApplicationByIDRequest, opts ...grpc.CallOption) (*Application, error) {
+	out := new(Application)
+	err := c.cc.Invoke(ctx, ApplicationService_GetApplicationByID_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,6 +95,7 @@ func (c *applicationServiceClient) DeleteApplication(ctx context.Context, in *De
 // for forward compatibility
 type ApplicationServiceServer interface {
 	CreateApplication(context.Context, *CreateApplicationRequest) (*CreateApplicationResponse, error)
+	GetApplicationByID(context.Context, *GetApplicationByIDRequest) (*Application, error)
 	GetApplications(context.Context, *GetApplicationsRequest) (*Applications, error)
 	UpdateApplication(context.Context, *UpdateApplicationRequest) (*Application, error)
 	DeleteApplication(context.Context, *DeleteApplicationRequest) (*DeleteApplicationResponse, error)
@@ -96,6 +108,9 @@ type UnimplementedApplicationServiceServer struct {
 
 func (UnimplementedApplicationServiceServer) CreateApplication(context.Context, *CreateApplicationRequest) (*CreateApplicationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateApplication not implemented")
+}
+func (UnimplementedApplicationServiceServer) GetApplicationByID(context.Context, *GetApplicationByIDRequest) (*Application, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApplicationByID not implemented")
 }
 func (UnimplementedApplicationServiceServer) GetApplications(context.Context, *GetApplicationsRequest) (*Applications, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplications not implemented")
@@ -133,6 +148,24 @@ func _ApplicationService_CreateApplication_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ApplicationServiceServer).CreateApplication(ctx, req.(*CreateApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApplicationService_GetApplicationByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetApplicationByIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).GetApplicationByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApplicationService_GetApplicationByID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).GetApplicationByID(ctx, req.(*GetApplicationByIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -201,6 +234,10 @@ var ApplicationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateApplication",
 			Handler:    _ApplicationService_CreateApplication_Handler,
+		},
+		{
+			MethodName: "GetApplicationByID",
+			Handler:    _ApplicationService_GetApplicationByID_Handler,
 		},
 		{
 			MethodName: "GetApplications",

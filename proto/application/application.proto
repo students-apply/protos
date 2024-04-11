@@ -8,6 +8,7 @@ import "google/protobuf/timestamp.proto";
 
 service ApplicationService {
   rpc CreateApplication(CreateApplicationRequest) returns (CreateApplicationResponse);
+  rpc GetApplicationByID(GetApplicationByIDRequest) returns (Application);
   rpc GetApplications(GetApplicationsRequest) returns (Applications);
   rpc UpdateApplication(UpdateApplicationRequest) returns (Application);
   rpc DeleteApplication(DeleteApplicationRequest) returns (DeleteApplicationResponse);
@@ -21,6 +22,10 @@ message CreateApplicationRequest {
 }
 
 message CreateApplicationResponse {
+  int64 id = 1;
+}
+
+message GetApplicationByIDRequest {
   int64 id = 1;
 }
 
