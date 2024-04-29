@@ -42,8 +42,9 @@ message Application {
   string resume_id = 3;
   string internship_id = 4;
   string status = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
+  string chat_id = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
 }
 
 message GetApplicationsRequest {
