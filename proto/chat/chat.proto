@@ -9,6 +9,8 @@ import "google/protobuf/timestamp.proto";
 service UserChatService {
   rpc CreateChat(CreateUserChatRequest) returns (CreateUserChatResponse);
   rpc GetChats(GetUserChatsRequest) returns (Chats);
+  rpc GetChatByID(GetUserChatByIDRequest) returns (Chat);
+  rpc GetChatByApplicationID(GetUserChatByApplicationIDRequest) returns (Chat);
   rpc DeleteChat(DeleteUserChatRequest) returns (DeleteUserChatResponse);
   rpc CreateMessage(CreateUserMessageRequest) returns (CreateUserMessageResponse);
   rpc GetMessages(GetUserMessagesRequest) returns (Messages);
@@ -20,6 +22,8 @@ service UserChatService {
 service CompanyChatService {
   rpc CreateChat(CreateCompanyChatRequest) returns (CreateCompanyChatResponse);
   rpc GetChats(GetCompanyChatsRequest) returns (Chats);
+  rpc GetChatByID(GetCompanyChatByIDRequest) returns (Chat);
+  rpc GetChatByApplicationID(GetCompanyChatByApplicationIDRequest) returns (Chat);
   rpc DeleteChat(DeleteCompanyChatRequest) returns (DeleteCompanyChatResponse);
   rpc CreateMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
   rpc GetMessages(GetCompanyMessagesRequest) returns (Messages);
@@ -50,6 +54,16 @@ message Chat {
 
 message GetUserChatsRequest {
   string user_id = 1;
+}
+
+message GetUserChatByIDRequest {
+  string user_id = 1;
+  string chat_id = 2;
+}
+
+message GetUserChatByApplicationIDRequest {
+  string user_id = 1;
+  int64 application_id = 2;
 }
 
 message Chats {
@@ -112,6 +126,16 @@ message CreateCompanyChatResponse {
 
 message GetCompanyChatsRequest {
   string company_id = 1;
+}
+
+message GetCompanyChatByIDRequest {
+  string company_id = 1;
+  string chat_id = 2;
+}
+
+message GetCompanyChatByApplicationIDRequest {
+  string company_id = 1;
+  int64 application_id = 2;
 }
 
 message DeleteCompanyChatRequest {

@@ -19,14 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	UserChatService_CreateChat_FullMethodName    = "/chat.UserChatService/CreateChat"
-	UserChatService_GetChats_FullMethodName      = "/chat.UserChatService/GetChats"
-	UserChatService_DeleteChat_FullMethodName    = "/chat.UserChatService/DeleteChat"
-	UserChatService_CreateMessage_FullMethodName = "/chat.UserChatService/CreateMessage"
-	UserChatService_GetMessages_FullMethodName   = "/chat.UserChatService/GetMessages"
-	UserChatService_UpdateMessage_FullMethodName = "/chat.UserChatService/UpdateMessage"
-	UserChatService_DeleteMessage_FullMethodName = "/chat.UserChatService/DeleteMessage"
-	UserChatService_ViewMessage_FullMethodName   = "/chat.UserChatService/ViewMessage"
+	UserChatService_CreateChat_FullMethodName             = "/chat.UserChatService/CreateChat"
+	UserChatService_GetChats_FullMethodName               = "/chat.UserChatService/GetChats"
+	UserChatService_GetChatByID_FullMethodName            = "/chat.UserChatService/GetChatByID"
+	UserChatService_GetChatByApplicationID_FullMethodName = "/chat.UserChatService/GetChatByApplicationID"
+	UserChatService_DeleteChat_FullMethodName             = "/chat.UserChatService/DeleteChat"
+	UserChatService_CreateMessage_FullMethodName          = "/chat.UserChatService/CreateMessage"
+	UserChatService_GetMessages_FullMethodName            = "/chat.UserChatService/GetMessages"
+	UserChatService_UpdateMessage_FullMethodName          = "/chat.UserChatService/UpdateMessage"
+	UserChatService_DeleteMessage_FullMethodName          = "/chat.UserChatService/DeleteMessage"
+	UserChatService_ViewMessage_FullMethodName            = "/chat.UserChatService/ViewMessage"
 )
 
 // UserChatServiceClient is the client API for UserChatService service.
@@ -35,6 +37,8 @@ const (
 type UserChatServiceClient interface {
 	CreateChat(ctx context.Context, in *CreateUserChatRequest, opts ...grpc.CallOption) (*CreateUserChatResponse, error)
 	GetChats(ctx context.Context, in *GetUserChatsRequest, opts ...grpc.CallOption) (*Chats, error)
+	GetChatByID(ctx context.Context, in *GetUserChatByIDRequest, opts ...grpc.CallOption) (*Chat, error)
+	GetChatByApplicationID(ctx context.Context, in *GetUserChatByApplicationIDRequest, opts ...grpc.CallOption) (*Chat, error)
 	DeleteChat(ctx context.Context, in *DeleteUserChatRequest, opts ...grpc.CallOption) (*DeleteUserChatResponse, error)
 	CreateMessage(ctx context.Context, in *CreateUserMessageRequest, opts ...grpc.CallOption) (*CreateUserMessageResponse, error)
 	GetMessages(ctx context.Context, in *GetUserMessagesRequest, opts ...grpc.CallOption) (*Messages, error)
@@ -63,6 +67,24 @@ func (c *userChatServiceClient) CreateChat(ctx context.Context, in *CreateUserCh
 func (c *userChatServiceClient) GetChats(ctx context.Context, in *GetUserChatsRequest, opts ...grpc.CallOption) (*Chats, error) {
 	out := new(Chats)
 	err := c.cc.Invoke(ctx, UserChatService_GetChats_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userChatServiceClient) GetChatByID(ctx context.Context, in *GetUserChatByIDRequest, opts ...grpc.CallOption) (*Chat, error) {
+	out := new(Chat)
+	err := c.cc.Invoke(ctx, UserChatService_GetChatByID_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userChatServiceClient) GetChatByApplicationID(ctx context.Context, in *GetUserChatByApplicationIDRequest, opts ...grpc.CallOption) (*Chat, error) {
+	out := new(Chat)
+	err := c.cc.Invoke(ctx, UserChatService_GetChatByApplicationID_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -129,6 +151,8 @@ func (c *userChatServiceClient) ViewMessage(ctx context.Context, in *ViewUserMes
 type UserChatServiceServer interface {
 	CreateChat(context.Context, *CreateUserChatRequest) (*CreateUserChatResponse, error)
 	GetChats(context.Context, *GetUserChatsRequest) (*Chats, error)
+	GetChatByID(context.Context, *GetUserChatByIDRequest) (*Chat, error)
+	GetChatByApplicationID(context.Context, *GetUserChatByApplicationIDRequest) (*Chat, error)
 	DeleteChat(context.Context, *DeleteUserChatRequest) (*DeleteUserChatResponse, error)
 	CreateMessage(context.Context, *CreateUserMessageRequest) (*CreateUserMessageResponse, error)
 	GetMessages(context.Context, *GetUserMessagesRequest) (*Messages, error)
@@ -147,6 +171,12 @@ func (UnimplementedUserChatServiceServer) CreateChat(context.Context, *CreateUse
 }
 func (UnimplementedUserChatServiceServer) GetChats(context.Context, *GetUserChatsRequest) (*Chats, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetChats not implemented")
+}
+func (UnimplementedUserChatServiceServer) GetChatByID(context.Context, *GetUserChatByIDRequest) (*Chat, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChatByID not implemented")
+}
+func (UnimplementedUserChatServiceServer) GetChatByApplicationID(context.Context, *GetUserChatByApplicationIDRequest) (*Chat, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChatByApplicationID not implemented")
 }
 func (UnimplementedUserChatServiceServer) DeleteChat(context.Context, *DeleteUserChatRequest) (*DeleteUserChatResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteChat not implemented")
@@ -211,6 +241,42 @@ func _UserChatService_GetChats_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserChatServiceServer).GetChats(ctx, req.(*GetUserChatsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserChatService_GetChatByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserChatByIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserChatServiceServer).GetChatByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserChatService_GetChatByID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserChatServiceServer).GetChatByID(ctx, req.(*GetUserChatByIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserChatService_GetChatByApplicationID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserChatByApplicationIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserChatServiceServer).GetChatByApplicationID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserChatService_GetChatByApplicationID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserChatServiceServer).GetChatByApplicationID(ctx, req.(*GetUserChatByApplicationIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -339,6 +405,14 @@ var UserChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserChatService_GetChats_Handler,
 		},
 		{
+			MethodName: "GetChatByID",
+			Handler:    _UserChatService_GetChatByID_Handler,
+		},
+		{
+			MethodName: "GetChatByApplicationID",
+			Handler:    _UserChatService_GetChatByApplicationID_Handler,
+		},
+		{
 			MethodName: "DeleteChat",
 			Handler:    _UserChatService_DeleteChat_Handler,
 		},
@@ -368,14 +442,16 @@ var UserChatService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	CompanyChatService_CreateChat_FullMethodName    = "/chat.CompanyChatService/CreateChat"
-	CompanyChatService_GetChats_FullMethodName      = "/chat.CompanyChatService/GetChats"
-	CompanyChatService_DeleteChat_FullMethodName    = "/chat.CompanyChatService/DeleteChat"
-	CompanyChatService_CreateMessage_FullMethodName = "/chat.CompanyChatService/CreateMessage"
-	CompanyChatService_GetMessages_FullMethodName   = "/chat.CompanyChatService/GetMessages"
-	CompanyChatService_UpdateMessage_FullMethodName = "/chat.CompanyChatService/UpdateMessage"
-	CompanyChatService_DeleteMessage_FullMethodName = "/chat.CompanyChatService/DeleteMessage"
-	CompanyChatService_ViewMessage_FullMethodName   = "/chat.CompanyChatService/ViewMessage"
+	CompanyChatService_CreateChat_FullMethodName             = "/chat.CompanyChatService/CreateChat"
+	CompanyChatService_GetChats_FullMethodName               = "/chat.CompanyChatService/GetChats"
+	CompanyChatService_GetChatByID_FullMethodName            = "/chat.CompanyChatService/GetChatByID"
+	CompanyChatService_GetChatByApplicationID_FullMethodName = "/chat.CompanyChatService/GetChatByApplicationID"
+	CompanyChatService_DeleteChat_FullMethodName             = "/chat.CompanyChatService/DeleteChat"
+	CompanyChatService_CreateMessage_FullMethodName          = "/chat.CompanyChatService/CreateMessage"
+	CompanyChatService_GetMessages_FullMethodName            = "/chat.CompanyChatService/GetMessages"
+	CompanyChatService_UpdateMessage_FullMethodName          = "/chat.CompanyChatService/UpdateMessage"
+	CompanyChatService_DeleteMessage_FullMethodName          = "/chat.CompanyChatService/DeleteMessage"
+	CompanyChatService_ViewMessage_FullMethodName            = "/chat.CompanyChatService/ViewMessage"
 )
 
 // CompanyChatServiceClient is the client API for CompanyChatService service.
@@ -384,6 +460,8 @@ const (
 type CompanyChatServiceClient interface {
 	CreateChat(ctx context.Context, in *CreateCompanyChatRequest, opts ...grpc.CallOption) (*CreateCompanyChatResponse, error)
 	GetChats(ctx context.Context, in *GetCompanyChatsRequest, opts ...grpc.CallOption) (*Chats, error)
+	GetChatByID(ctx context.Context, in *GetCompanyChatByIDRequest, opts ...grpc.CallOption) (*Chat, error)
+	GetChatByApplicationID(ctx context.Context, in *GetCompanyChatByApplicationIDRequest, opts ...grpc.CallOption) (*Chat, error)
 	DeleteChat(ctx context.Context, in *DeleteCompanyChatRequest, opts ...grpc.CallOption) (*DeleteCompanyChatResponse, error)
 	CreateMessage(ctx context.Context, in *CreateCompanyMessageRequest, opts ...grpc.CallOption) (*CreateCompanyMessageResponse, error)
 	GetMessages(ctx context.Context, in *GetCompanyMessagesRequest, opts ...grpc.CallOption) (*Messages, error)
@@ -412,6 +490,24 @@ func (c *companyChatServiceClient) CreateChat(ctx context.Context, in *CreateCom
 func (c *companyChatServiceClient) GetChats(ctx context.Context, in *GetCompanyChatsRequest, opts ...grpc.CallOption) (*Chats, error) {
 	out := new(Chats)
 	err := c.cc.Invoke(ctx, CompanyChatService_GetChats_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *companyChatServiceClient) GetChatByID(ctx context.Context, in *GetCompanyChatByIDRequest, opts ...grpc.CallOption) (*Chat, error) {
+	out := new(Chat)
+	err := c.cc.Invoke(ctx, CompanyChatService_GetChatByID_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *companyChatServiceClient) GetChatByApplicationID(ctx context.Context, in *GetCompanyChatByApplicationIDRequest, opts ...grpc.CallOption) (*Chat, error) {
+	out := new(Chat)
+	err := c.cc.Invoke(ctx, CompanyChatService_GetChatByApplicationID_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -478,6 +574,8 @@ func (c *companyChatServiceClient) ViewMessage(ctx context.Context, in *ViewComp
 type CompanyChatServiceServer interface {
 	CreateChat(context.Context, *CreateCompanyChatRequest) (*CreateCompanyChatResponse, error)
 	GetChats(context.Context, *GetCompanyChatsRequest) (*Chats, error)
+	GetChatByID(context.Context, *GetCompanyChatByIDRequest) (*Chat, error)
+	GetChatByApplicationID(context.Context, *GetCompanyChatByApplicationIDRequest) (*Chat, error)
 	DeleteChat(context.Context, *DeleteCompanyChatRequest) (*DeleteCompanyChatResponse, error)
 	CreateMessage(context.Context, *CreateCompanyMessageRequest) (*CreateCompanyMessageResponse, error)
 	GetMessages(context.Context, *GetCompanyMessagesRequest) (*Messages, error)
@@ -496,6 +594,12 @@ func (UnimplementedCompanyChatServiceServer) CreateChat(context.Context, *Create
 }
 func (UnimplementedCompanyChatServiceServer) GetChats(context.Context, *GetCompanyChatsRequest) (*Chats, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetChats not implemented")
+}
+func (UnimplementedCompanyChatServiceServer) GetChatByID(context.Context, *GetCompanyChatByIDRequest) (*Chat, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChatByID not implemented")
+}
+func (UnimplementedCompanyChatServiceServer) GetChatByApplicationID(context.Context, *GetCompanyChatByApplicationIDRequest) (*Chat, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChatByApplicationID not implemented")
 }
 func (UnimplementedCompanyChatServiceServer) DeleteChat(context.Context, *DeleteCompanyChatRequest) (*DeleteCompanyChatResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteChat not implemented")
@@ -560,6 +664,42 @@ func _CompanyChatService_GetChats_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CompanyChatServiceServer).GetChats(ctx, req.(*GetCompanyChatsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CompanyChatService_GetChatByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCompanyChatByIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyChatServiceServer).GetChatByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyChatService_GetChatByID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyChatServiceServer).GetChatByID(ctx, req.(*GetCompanyChatByIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CompanyChatService_GetChatByApplicationID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCompanyChatByApplicationIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyChatServiceServer).GetChatByApplicationID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyChatService_GetChatByApplicationID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyChatServiceServer).GetChatByApplicationID(ctx, req.(*GetCompanyChatByApplicationIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -686,6 +826,14 @@ var CompanyChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetChats",
 			Handler:    _CompanyChatService_GetChats_Handler,
+		},
+		{
+			MethodName: "GetChatByID",
+			Handler:    _CompanyChatService_GetChatByID_Handler,
+		},
+		{
+			MethodName: "GetChatByApplicationID",
+			Handler:    _CompanyChatService_GetChatByApplicationID_Handler,
 		},
 		{
 			MethodName: "DeleteChat",
