@@ -14,6 +14,7 @@ service UserChatService {
   rpc DeleteChat(DeleteUserChatRequest) returns (DeleteUserChatResponse);
   rpc CreateMessage(CreateUserMessageRequest) returns (CreateUserMessageResponse);
   rpc GetMessages(GetUserMessagesRequest) returns (Messages);
+  rpc GetLastMessage(GetUserLastMessageRequest) returns (Message);
   rpc UpdateMessage(UpdateUserMessageRequest) returns (Message);
   rpc DeleteMessage(DeleteUserMessageRequest) returns (DeleteUserMessageResponse);
   rpc ViewMessage(ViewUserMessageRequest) returns (Message);
@@ -27,6 +28,7 @@ service CompanyChatService {
   rpc DeleteChat(DeleteCompanyChatRequest) returns (DeleteCompanyChatResponse);
   rpc CreateMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
   rpc GetMessages(GetCompanyMessagesRequest) returns (Messages);
+  rpc GetLastMessage(GetCompanyLastMessageRequest) returns (Message);
   rpc UpdateMessage(UpdateCompanyMessageRequest) returns (Message);
   rpc DeleteMessage(DeleteCompanyMessageRequest) returns (DeleteCompanyMessageResponse);
   rpc ViewMessage(ViewCompanyMessageRequest) returns (Message);
@@ -78,6 +80,11 @@ message DeleteUserChatRequest {
 message DeleteUserChatResponse {}
 
 message GetUserMessagesRequest {
+  string chat_id = 1;
+  string user_id = 2;
+}
+
+message GetUserLastMessageRequest {
   string chat_id = 1;
   string user_id = 2;
 }
@@ -146,6 +153,11 @@ message DeleteCompanyChatRequest {
 message DeleteCompanyChatResponse {}
 
 message GetCompanyMessagesRequest {
+  string chat_id = 1;
+  string company_id = 2;
+}
+
+message GetCompanyLastMessageRequest {
   string chat_id = 1;
   string company_id = 2;
 }
