@@ -14,7 +14,6 @@ service UserChatService {
   rpc DeleteChat(DeleteUserChatRequest) returns (DeleteUserChatResponse);
   rpc CreateMessage(CreateUserMessageRequest) returns (CreateUserMessageResponse);
   rpc GetMessages(GetUserMessagesRequest) returns (Messages);
-  rpc GetLastMessage(GetUserLastMessageRequest) returns (Message);
   rpc UpdateMessage(UpdateUserMessageRequest) returns (Message);
   rpc DeleteMessage(DeleteUserMessageRequest) returns (DeleteUserMessageResponse);
   rpc ViewMessage(ViewUserMessageRequest) returns (Message);
@@ -28,7 +27,6 @@ service CompanyChatService {
   rpc DeleteChat(DeleteCompanyChatRequest) returns (DeleteCompanyChatResponse);
   rpc CreateMessage(CreateCompanyMessageRequest) returns (CreateCompanyMessageResponse);
   rpc GetMessages(GetCompanyMessagesRequest) returns (Messages);
-  rpc GetLastMessage(GetCompanyLastMessageRequest) returns (Message);
   rpc UpdateMessage(UpdateCompanyMessageRequest) returns (Message);
   rpc DeleteMessage(DeleteCompanyMessageRequest) returns (DeleteCompanyMessageResponse);
   rpc ViewMessage(ViewCompanyMessageRequest) returns (Message);
@@ -52,6 +50,7 @@ message Chat {
   int64 application_id = 4;
   string internship_id = 5;
   google.protobuf.Timestamp created_at = 6;
+  Message last_message = 7;
 }
 
 message GetUserChatsRequest {
