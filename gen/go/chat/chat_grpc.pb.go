@@ -26,7 +26,6 @@ const (
 	UserChatService_DeleteChat_FullMethodName             = "/chat.UserChatService/DeleteChat"
 	UserChatService_CreateMessage_FullMethodName          = "/chat.UserChatService/CreateMessage"
 	UserChatService_GetMessages_FullMethodName            = "/chat.UserChatService/GetMessages"
-	UserChatService_GetLastMessage_FullMethodName         = "/chat.UserChatService/GetLastMessage"
 	UserChatService_UpdateMessage_FullMethodName          = "/chat.UserChatService/UpdateMessage"
 	UserChatService_DeleteMessage_FullMethodName          = "/chat.UserChatService/DeleteMessage"
 	UserChatService_ViewMessage_FullMethodName            = "/chat.UserChatService/ViewMessage"
@@ -43,7 +42,6 @@ type UserChatServiceClient interface {
 	DeleteChat(ctx context.Context, in *DeleteUserChatRequest, opts ...grpc.CallOption) (*DeleteUserChatResponse, error)
 	CreateMessage(ctx context.Context, in *CreateUserMessageRequest, opts ...grpc.CallOption) (*CreateUserMessageResponse, error)
 	GetMessages(ctx context.Context, in *GetUserMessagesRequest, opts ...grpc.CallOption) (*Messages, error)
-	GetLastMessage(ctx context.Context, in *GetUserLastMessageRequest, opts ...grpc.CallOption) (*Message, error)
 	UpdateMessage(ctx context.Context, in *UpdateUserMessageRequest, opts ...grpc.CallOption) (*Message, error)
 	DeleteMessage(ctx context.Context, in *DeleteUserMessageRequest, opts ...grpc.CallOption) (*DeleteUserMessageResponse, error)
 	ViewMessage(ctx context.Context, in *ViewUserMessageRequest, opts ...grpc.CallOption) (*Message, error)
@@ -120,15 +118,6 @@ func (c *userChatServiceClient) GetMessages(ctx context.Context, in *GetUserMess
 	return out, nil
 }
 
-func (c *userChatServiceClient) GetLastMessage(ctx context.Context, in *GetUserLastMessageRequest, opts ...grpc.CallOption) (*Message, error) {
-	out := new(Message)
-	err := c.cc.Invoke(ctx, UserChatService_GetLastMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *userChatServiceClient) UpdateMessage(ctx context.Context, in *UpdateUserMessageRequest, opts ...grpc.CallOption) (*Message, error) {
 	out := new(Message)
 	err := c.cc.Invoke(ctx, UserChatService_UpdateMessage_FullMethodName, in, out, opts...)
@@ -167,7 +156,6 @@ type UserChatServiceServer interface {
 	DeleteChat(context.Context, *DeleteUserChatRequest) (*DeleteUserChatResponse, error)
 	CreateMessage(context.Context, *CreateUserMessageRequest) (*CreateUserMessageResponse, error)
 	GetMessages(context.Context, *GetUserMessagesRequest) (*Messages, error)
-	GetLastMessage(context.Context, *GetUserLastMessageRequest) (*Message, error)
 	UpdateMessage(context.Context, *UpdateUserMessageRequest) (*Message, error)
 	DeleteMessage(context.Context, *DeleteUserMessageRequest) (*DeleteUserMessageResponse, error)
 	ViewMessage(context.Context, *ViewUserMessageRequest) (*Message, error)
@@ -198,9 +186,6 @@ func (UnimplementedUserChatServiceServer) CreateMessage(context.Context, *Create
 }
 func (UnimplementedUserChatServiceServer) GetMessages(context.Context, *GetUserMessagesRequest) (*Messages, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMessages not implemented")
-}
-func (UnimplementedUserChatServiceServer) GetLastMessage(context.Context, *GetUserLastMessageRequest) (*Message, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLastMessage not implemented")
 }
 func (UnimplementedUserChatServiceServer) UpdateMessage(context.Context, *UpdateUserMessageRequest) (*Message, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMessage not implemented")
@@ -350,24 +335,6 @@ func _UserChatService_GetMessages_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserChatService_GetLastMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserLastMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserChatServiceServer).GetLastMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: UserChatService_GetLastMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserChatServiceServer).GetLastMessage(ctx, req.(*GetUserLastMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _UserChatService_UpdateMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateUserMessageRequest)
 	if err := dec(in); err != nil {
@@ -458,10 +425,6 @@ var UserChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserChatService_GetMessages_Handler,
 		},
 		{
-			MethodName: "GetLastMessage",
-			Handler:    _UserChatService_GetLastMessage_Handler,
-		},
-		{
 			MethodName: "UpdateMessage",
 			Handler:    _UserChatService_UpdateMessage_Handler,
 		},
@@ -486,7 +449,6 @@ const (
 	CompanyChatService_DeleteChat_FullMethodName             = "/chat.CompanyChatService/DeleteChat"
 	CompanyChatService_CreateMessage_FullMethodName          = "/chat.CompanyChatService/CreateMessage"
 	CompanyChatService_GetMessages_FullMethodName            = "/chat.CompanyChatService/GetMessages"
-	CompanyChatService_GetLastMessage_FullMethodName         = "/chat.CompanyChatService/GetLastMessage"
 	CompanyChatService_UpdateMessage_FullMethodName          = "/chat.CompanyChatService/UpdateMessage"
 	CompanyChatService_DeleteMessage_FullMethodName          = "/chat.CompanyChatService/DeleteMessage"
 	CompanyChatService_ViewMessage_FullMethodName            = "/chat.CompanyChatService/ViewMessage"
@@ -503,7 +465,6 @@ type CompanyChatServiceClient interface {
 	DeleteChat(ctx context.Context, in *DeleteCompanyChatRequest, opts ...grpc.CallOption) (*DeleteCompanyChatResponse, error)
 	CreateMessage(ctx context.Context, in *CreateCompanyMessageRequest, opts ...grpc.CallOption) (*CreateCompanyMessageResponse, error)
 	GetMessages(ctx context.Context, in *GetCompanyMessagesRequest, opts ...grpc.CallOption) (*Messages, error)
-	GetLastMessage(ctx context.Context, in *GetCompanyLastMessageRequest, opts ...grpc.CallOption) (*Message, error)
 	UpdateMessage(ctx context.Context, in *UpdateCompanyMessageRequest, opts ...grpc.CallOption) (*Message, error)
 	DeleteMessage(ctx context.Context, in *DeleteCompanyMessageRequest, opts ...grpc.CallOption) (*DeleteCompanyMessageResponse, error)
 	ViewMessage(ctx context.Context, in *ViewCompanyMessageRequest, opts ...grpc.CallOption) (*Message, error)
@@ -580,15 +541,6 @@ func (c *companyChatServiceClient) GetMessages(ctx context.Context, in *GetCompa
 	return out, nil
 }
 
-func (c *companyChatServiceClient) GetLastMessage(ctx context.Context, in *GetCompanyLastMessageRequest, opts ...grpc.CallOption) (*Message, error) {
-	out := new(Message)
-	err := c.cc.Invoke(ctx, CompanyChatService_GetLastMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *companyChatServiceClient) UpdateMessage(ctx context.Context, in *UpdateCompanyMessageRequest, opts ...grpc.CallOption) (*Message, error) {
 	out := new(Message)
 	err := c.cc.Invoke(ctx, CompanyChatService_UpdateMessage_FullMethodName, in, out, opts...)
@@ -627,7 +579,6 @@ type CompanyChatServiceServer interface {
 	DeleteChat(context.Context, *DeleteCompanyChatRequest) (*DeleteCompanyChatResponse, error)
 	CreateMessage(context.Context, *CreateCompanyMessageRequest) (*CreateCompanyMessageResponse, error)
 	GetMessages(context.Context, *GetCompanyMessagesRequest) (*Messages, error)
-	GetLastMessage(context.Context, *GetCompanyLastMessageRequest) (*Message, error)
 	UpdateMessage(context.Context, *UpdateCompanyMessageRequest) (*Message, error)
 	DeleteMessage(context.Context, *DeleteCompanyMessageRequest) (*DeleteCompanyMessageResponse, error)
 	ViewMessage(context.Context, *ViewCompanyMessageRequest) (*Message, error)
@@ -658,9 +609,6 @@ func (UnimplementedCompanyChatServiceServer) CreateMessage(context.Context, *Cre
 }
 func (UnimplementedCompanyChatServiceServer) GetMessages(context.Context, *GetCompanyMessagesRequest) (*Messages, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMessages not implemented")
-}
-func (UnimplementedCompanyChatServiceServer) GetLastMessage(context.Context, *GetCompanyLastMessageRequest) (*Message, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLastMessage not implemented")
 }
 func (UnimplementedCompanyChatServiceServer) UpdateMessage(context.Context, *UpdateCompanyMessageRequest) (*Message, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMessage not implemented")
@@ -810,24 +758,6 @@ func _CompanyChatService_GetMessages_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CompanyChatService_GetLastMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCompanyLastMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CompanyChatServiceServer).GetLastMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CompanyChatService_GetLastMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CompanyChatServiceServer).GetLastMessage(ctx, req.(*GetCompanyLastMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _CompanyChatService_UpdateMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateCompanyMessageRequest)
 	if err := dec(in); err != nil {
@@ -916,10 +846,6 @@ var CompanyChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMessages",
 			Handler:    _CompanyChatService_GetMessages_Handler,
-		},
-		{
-			MethodName: "GetLastMessage",
-			Handler:    _CompanyChatService_GetLastMessage_Handler,
 		},
 		{
 			MethodName: "UpdateMessage",
