@@ -32,8 +32,9 @@ message GetResumeViewsResponse {
 
 message View {
   string view_id = 1;
-  string company_id = 2;
-  string company_name = 3;
-  string company_avatar = 4;
-  google.protobuf.Timestamp viewed_at = 5;
+  string resume_id = 2;
+  string company_id = 3;
+  string company_name = 4;
+  string company_avatar = 5;
+  google.protobuf.Timestamp viewed_at = 6;
 }
