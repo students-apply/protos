@@ -21,19 +21,19 @@ message CreateViewResponse {
 }
 
 message GetResumeViewsRequest {
-  string cursor = 1;
-  string resume_id = 2;
+  string resume_id = 1;
+  optional int32 last_days = 2;
 }
 
 message GetResumeViewsResponse {
   repeated View views = 1;
-  string cursor = 2;
   int32 total = 3;
 }
 
 message View {
   string view_id = 1;
-  string resume_id = 2;
-  string company_id = 3;
-  google.protobuf.Timestamp viewed_at = 4;
+  string company_id = 2;
+  string company_name = 3;
+  string company_avatar = 4;
+  google.protobuf.Timestamp viewed_at = 5;
 }
