@@ -19,13 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	InternshipService_CreateInternship_FullMethodName  = "/internship.InternshipService/CreateInternship"
-	InternshipService_UploadAttachment_FullMethodName  = "/internship.InternshipService/UploadAttachment"
-	InternshipService_DeleteAttachment_FullMethodName  = "/internship.InternshipService/DeleteAttachment"
-	InternshipService_GetInternships_FullMethodName    = "/internship.InternshipService/GetInternships"
-	InternshipService_GetInternshipByID_FullMethodName = "/internship.InternshipService/GetInternshipByID"
-	InternshipService_UpdateInternship_FullMethodName  = "/internship.InternshipService/UpdateInternship"
-	InternshipService_DeleteInternship_FullMethodName  = "/internship.InternshipService/DeleteInternship"
+	InternshipService_CreateInternship_FullMethodName         = "/internship.InternshipService/CreateInternship"
+	InternshipService_GetInternships_FullMethodName           = "/internship.InternshipService/GetInternships"
+	InternshipService_GetInternshipByID_FullMethodName        = "/internship.InternshipService/GetInternshipByID"
+	InternshipService_UpdateInternship_FullMethodName         = "/internship.InternshipService/UpdateInternship"
+	InternshipService_DeleteInternship_FullMethodName         = "/internship.InternshipService/DeleteInternship"
+	InternshipService_GetFavoriteInternships_FullMethodName   = "/internship.InternshipService/GetFavoriteInternships"
+	InternshipService_AddFavoriteInternship_FullMethodName    = "/internship.InternshipService/AddFavoriteInternship"
+	InternshipService_DeleteFavoriteInternship_FullMethodName = "/internship.InternshipService/DeleteFavoriteInternship"
+	InternshipService_UploadAttachment_FullMethodName         = "/internship.InternshipService/UploadAttachment"
+	InternshipService_DeleteAttachment_FullMethodName         = "/internship.InternshipService/DeleteAttachment"
 )
 
 // InternshipServiceClient is the client API for InternshipService service.
@@ -33,12 +36,15 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InternshipServiceClient interface {
 	CreateInternship(ctx context.Context, in *CreateInternshipRequest, opts ...grpc.CallOption) (*CreateInternshipResponse, error)
-	UploadAttachment(ctx context.Context, in *UploadAttachmentRequest, opts ...grpc.CallOption) (*UploadAttachmentResponse, error)
-	DeleteAttachment(ctx context.Context, in *DeleteAttachmentRequest, opts ...grpc.CallOption) (*DeleteAttachmentResponse, error)
 	GetInternships(ctx context.Context, in *GetInternshipsRequest, opts ...grpc.CallOption) (*GetInternshipsResponse, error)
 	GetInternshipByID(ctx context.Context, in *GetInternshipRequest, opts ...grpc.CallOption) (*Internship, error)
 	UpdateInternship(ctx context.Context, in *UpdateInternshipRequest, opts ...grpc.CallOption) (*Internship, error)
 	DeleteInternship(ctx context.Context, in *DeleteInternshipRequest, opts ...grpc.CallOption) (*DeleteInternshipResponse, error)
+	GetFavoriteInternships(ctx context.Context, in *GetFavoriteInternshipsRequest, opts ...grpc.CallOption) (*GetInternshipsResponse, error)
+	AddFavoriteInternship(ctx context.Context, in *AddFavoriteInternshipRequest, opts ...grpc.CallOption) (*AddFavoriteInternshipResponse, error)
+	DeleteFavoriteInternship(ctx context.Context, in *DeleteFavoriteInternshipRequest, opts ...grpc.CallOption) (*DeleteFavoriteInternshipResponse, error)
+	UploadAttachment(ctx context.Context, in *UploadAttachmentRequest, opts ...grpc.CallOption) (*UploadAttachmentResponse, error)
+	DeleteAttachment(ctx context.Context, in *DeleteAttachmentRequest, opts ...grpc.CallOption) (*DeleteAttachmentResponse, error)
 }
 
 type internshipServiceClient struct {
@@ -52,24 +58,6 @@ func NewInternshipServiceClient(cc grpc.ClientConnInterface) InternshipServiceCl
 func (c *internshipServiceClient) CreateInternship(ctx context.Context, in *CreateInternshipRequest, opts ...grpc.CallOption) (*CreateInternshipResponse, error) {
 	out := new(CreateInternshipResponse)
 	err := c.cc.Invoke(ctx, InternshipService_CreateInternship_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *internshipServiceClient) UploadAttachment(ctx context.Context, in *UploadAttachmentRequest, opts ...grpc.CallOption) (*UploadAttachmentResponse, error) {
-	out := new(UploadAttachmentResponse)
-	err := c.cc.Invoke(ctx, InternshipService_UploadAttachment_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *internshipServiceClient) DeleteAttachment(ctx context.Context, in *DeleteAttachmentRequest, opts ...grpc.CallOption) (*DeleteAttachmentResponse, error) {
-	out := new(DeleteAttachmentResponse)
-	err := c.cc.Invoke(ctx, InternshipService_DeleteAttachment_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,17 +100,65 @@ func (c *internshipServiceClient) DeleteInternship(ctx context.Context, in *Dele
 	return out, nil
 }
 
+func (c *internshipServiceClient) GetFavoriteInternships(ctx context.Context, in *GetFavoriteInternshipsRequest, opts ...grpc.CallOption) (*GetInternshipsResponse, error) {
+	out := new(GetInternshipsResponse)
+	err := c.cc.Invoke(ctx, InternshipService_GetFavoriteInternships_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internshipServiceClient) AddFavoriteInternship(ctx context.Context, in *AddFavoriteInternshipRequest, opts ...grpc.CallOption) (*AddFavoriteInternshipResponse, error) {
+	out := new(AddFavoriteInternshipResponse)
+	err := c.cc.Invoke(ctx, InternshipService_AddFavoriteInternship_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internshipServiceClient) DeleteFavoriteInternship(ctx context.Context, in *DeleteFavoriteInternshipRequest, opts ...grpc.CallOption) (*DeleteFavoriteInternshipResponse, error) {
+	out := new(DeleteFavoriteInternshipResponse)
+	err := c.cc.Invoke(ctx, InternshipService_DeleteFavoriteInternship_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internshipServiceClient) UploadAttachment(ctx context.Context, in *UploadAttachmentRequest, opts ...grpc.CallOption) (*UploadAttachmentResponse, error) {
+	out := new(UploadAttachmentResponse)
+	err := c.cc.Invoke(ctx, InternshipService_UploadAttachment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internshipServiceClient) DeleteAttachment(ctx context.Context, in *DeleteAttachmentRequest, opts ...grpc.CallOption) (*DeleteAttachmentResponse, error) {
+	out := new(DeleteAttachmentResponse)
+	err := c.cc.Invoke(ctx, InternshipService_DeleteAttachment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InternshipServiceServer is the server API for InternshipService service.
 // All implementations must embed UnimplementedInternshipServiceServer
 // for forward compatibility
 type InternshipServiceServer interface {
 	CreateInternship(context.Context, *CreateInternshipRequest) (*CreateInternshipResponse, error)
-	UploadAttachment(context.Context, *UploadAttachmentRequest) (*UploadAttachmentResponse, error)
-	DeleteAttachment(context.Context, *DeleteAttachmentRequest) (*DeleteAttachmentResponse, error)
 	GetInternships(context.Context, *GetInternshipsRequest) (*GetInternshipsResponse, error)
 	GetInternshipByID(context.Context, *GetInternshipRequest) (*Internship, error)
 	UpdateInternship(context.Context, *UpdateInternshipRequest) (*Internship, error)
 	DeleteInternship(context.Context, *DeleteInternshipRequest) (*DeleteInternshipResponse, error)
+	GetFavoriteInternships(context.Context, *GetFavoriteInternshipsRequest) (*GetInternshipsResponse, error)
+	AddFavoriteInternship(context.Context, *AddFavoriteInternshipRequest) (*AddFavoriteInternshipResponse, error)
+	DeleteFavoriteInternship(context.Context, *DeleteFavoriteInternshipRequest) (*DeleteFavoriteInternshipResponse, error)
+	UploadAttachment(context.Context, *UploadAttachmentRequest) (*UploadAttachmentResponse, error)
+	DeleteAttachment(context.Context, *DeleteAttachmentRequest) (*DeleteAttachmentResponse, error)
 	mustEmbedUnimplementedInternshipServiceServer()
 }
 
@@ -132,12 +168,6 @@ type UnimplementedInternshipServiceServer struct {
 
 func (UnimplementedInternshipServiceServer) CreateInternship(context.Context, *CreateInternshipRequest) (*CreateInternshipResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateInternship not implemented")
-}
-func (UnimplementedInternshipServiceServer) UploadAttachment(context.Context, *UploadAttachmentRequest) (*UploadAttachmentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadAttachment not implemented")
-}
-func (UnimplementedInternshipServiceServer) DeleteAttachment(context.Context, *DeleteAttachmentRequest) (*DeleteAttachmentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteAttachment not implemented")
 }
 func (UnimplementedInternshipServiceServer) GetInternships(context.Context, *GetInternshipsRequest) (*GetInternshipsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInternships not implemented")
@@ -150,6 +180,21 @@ func (UnimplementedInternshipServiceServer) UpdateInternship(context.Context, *U
 }
 func (UnimplementedInternshipServiceServer) DeleteInternship(context.Context, *DeleteInternshipRequest) (*DeleteInternshipResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteInternship not implemented")
+}
+func (UnimplementedInternshipServiceServer) GetFavoriteInternships(context.Context, *GetFavoriteInternshipsRequest) (*GetInternshipsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFavoriteInternships not implemented")
+}
+func (UnimplementedInternshipServiceServer) AddFavoriteInternship(context.Context, *AddFavoriteInternshipRequest) (*AddFavoriteInternshipResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddFavoriteInternship not implemented")
+}
+func (UnimplementedInternshipServiceServer) DeleteFavoriteInternship(context.Context, *DeleteFavoriteInternshipRequest) (*DeleteFavoriteInternshipResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFavoriteInternship not implemented")
+}
+func (UnimplementedInternshipServiceServer) UploadAttachment(context.Context, *UploadAttachmentRequest) (*UploadAttachmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadAttachment not implemented")
+}
+func (UnimplementedInternshipServiceServer) DeleteAttachment(context.Context, *DeleteAttachmentRequest) (*DeleteAttachmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAttachment not implemented")
 }
 func (UnimplementedInternshipServiceServer) mustEmbedUnimplementedInternshipServiceServer() {}
 
@@ -178,42 +223,6 @@ func _InternshipService_CreateInternship_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(InternshipServiceServer).CreateInternship(ctx, req.(*CreateInternshipRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InternshipService_UploadAttachment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadAttachmentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InternshipServiceServer).UploadAttachment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InternshipService_UploadAttachment_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InternshipServiceServer).UploadAttachment(ctx, req.(*UploadAttachmentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InternshipService_DeleteAttachment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAttachmentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InternshipServiceServer).DeleteAttachment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InternshipService_DeleteAttachment_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InternshipServiceServer).DeleteAttachment(ctx, req.(*DeleteAttachmentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,6 +299,96 @@ func _InternshipService_DeleteInternship_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InternshipService_GetFavoriteInternships_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFavoriteInternshipsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternshipServiceServer).GetFavoriteInternships(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternshipService_GetFavoriteInternships_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternshipServiceServer).GetFavoriteInternships(ctx, req.(*GetFavoriteInternshipsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternshipService_AddFavoriteInternship_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddFavoriteInternshipRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternshipServiceServer).AddFavoriteInternship(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternshipService_AddFavoriteInternship_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternshipServiceServer).AddFavoriteInternship(ctx, req.(*AddFavoriteInternshipRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternshipService_DeleteFavoriteInternship_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFavoriteInternshipRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternshipServiceServer).DeleteFavoriteInternship(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternshipService_DeleteFavoriteInternship_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternshipServiceServer).DeleteFavoriteInternship(ctx, req.(*DeleteFavoriteInternshipRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternshipService_UploadAttachment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadAttachmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternshipServiceServer).UploadAttachment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternshipService_UploadAttachment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternshipServiceServer).UploadAttachment(ctx, req.(*UploadAttachmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternshipService_DeleteAttachment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAttachmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternshipServiceServer).DeleteAttachment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternshipService_DeleteAttachment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternshipServiceServer).DeleteAttachment(ctx, req.(*DeleteAttachmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InternshipService_ServiceDesc is the grpc.ServiceDesc for InternshipService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -300,14 +399,6 @@ var InternshipService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateInternship",
 			Handler:    _InternshipService_CreateInternship_Handler,
-		},
-		{
-			MethodName: "UploadAttachment",
-			Handler:    _InternshipService_UploadAttachment_Handler,
-		},
-		{
-			MethodName: "DeleteAttachment",
-			Handler:    _InternshipService_DeleteAttachment_Handler,
 		},
 		{
 			MethodName: "GetInternships",
@@ -324,6 +415,26 @@ var InternshipService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteInternship",
 			Handler:    _InternshipService_DeleteInternship_Handler,
+		},
+		{
+			MethodName: "GetFavoriteInternships",
+			Handler:    _InternshipService_GetFavoriteInternships_Handler,
+		},
+		{
+			MethodName: "AddFavoriteInternship",
+			Handler:    _InternshipService_AddFavoriteInternship_Handler,
+		},
+		{
+			MethodName: "DeleteFavoriteInternship",
+			Handler:    _InternshipService_DeleteFavoriteInternship_Handler,
+		},
+		{
+			MethodName: "UploadAttachment",
+			Handler:    _InternshipService_UploadAttachment_Handler,
+		},
+		{
+			MethodName: "DeleteAttachment",
+			Handler:    _InternshipService_DeleteAttachment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

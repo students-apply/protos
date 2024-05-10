@@ -7,12 +7,17 @@ import "google/protobuf/timestamp.proto";
 
 service InternshipService {
   rpc CreateInternship(CreateInternshipRequest) returns (CreateInternshipResponse);
-  rpc UploadAttachment(UploadAttachmentRequest) returns (UploadAttachmentResponse);
-  rpc DeleteAttachment(DeleteAttachmentRequest) returns (DeleteAttachmentResponse);
   rpc GetInternships(GetInternshipsRequest) returns (GetInternshipsResponse);
   rpc GetInternshipByID(GetInternshipRequest) returns (Internship);
   rpc UpdateInternship(UpdateInternshipRequest) returns (Internship);
   rpc DeleteInternship(DeleteInternshipRequest) returns (DeleteInternshipResponse);
+
+  rpc GetFavoriteInternships(GetFavoriteInternshipsRequest) returns (GetInternshipsResponse);
+  rpc AddFavoriteInternship(AddFavoriteInternshipRequest) returns (AddFavoriteInternshipResponse);
+  rpc DeleteFavoriteInternship(DeleteFavoriteInternshipRequest) returns (DeleteFavoriteInternshipResponse);
+
+  rpc UploadAttachment(UploadAttachmentRequest) returns (UploadAttachmentResponse);
+  rpc DeleteAttachment(DeleteAttachmentRequest) returns (DeleteAttachmentResponse);
 }
 
 message CreateInternshipRequest {
@@ -102,3 +107,22 @@ message DeleteInternshipRequest {
 }
 
 message DeleteInternshipResponse {}
+
+message GetFavoriteInternshipsRequest {
+  string user_id = 1;
+  string cursor = 2;
+}
+
+message AddFavoriteInternshipRequest {
+  string user_id = 1;
+  string internship_id = 2;
+}
+
+message AddFavoriteInternshipResponse {}
+
+message DeleteFavoriteInternshipRequest {
+  string user_id = 1;
+  string internship_id = 2;
+}
+
+message DeleteFavoriteInternshipResponse {}
