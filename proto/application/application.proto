@@ -8,17 +8,17 @@ import "google/protobuf/timestamp.proto";
 
 service UserApplicationService {
   rpc CreateApplication(CreateUserApplicationRequest) returns (CreateUserApplicationResponse);
-  rpc GetApplicationByID(GetUserApplicationByIDRequest) returns (Application);
-  rpc GetApplications(GetUserApplicationsRequest) returns (Applications);
-  rpc UpdateApplication(UpdateUserApplicationRequest) returns (Application);
+  rpc GetApplicationByID(GetUserApplicationByIDRequest) returns (UserApplication);
+  rpc GetApplications(GetUserApplicationsRequest) returns (UserApplications);
+  rpc UpdateApplication(UpdateUserApplicationRequest) returns (UserApplication);
   rpc DeleteApplication(DeleteUserApplicationRequest) returns (DeleteUserApplicationResponse);
 }
 
 service CompanyApplicationService {
   rpc CreateApplication(CreateCompanyApplicationRequest) returns (CreateCompanyApplicationResponse);
-  rpc GetApplicationByID(GetCompanyApplicationByIDRequest) returns (Application);
-  rpc GetApplications(GetCompanyApplicationsRequest) returns (Applications);
-  rpc UpdateApplication(UpdateCompanyApplicationRequest) returns (Application);
+  rpc GetApplicationByID(GetCompanyApplicationByIDRequest) returns (CompanyApplication);
+  rpc GetApplications(GetCompanyApplicationsRequest) returns (CompanyApplications);
+  rpc UpdateApplication(UpdateCompanyApplicationRequest) returns (CompanyApplication);
   rpc DeleteApplication(DeleteCompanyApplicationRequest) returns (DeleteCompanyApplicationResponse);
 }
 
@@ -44,24 +44,23 @@ message UpdateUserApplicationRequest {
   string status = 3;
 }
 
-message Application {
+message UserApplication {
   int64 id = 1;
   string user_id = 2;
-  string company_id = 3;
-  string resume_id = 4;
-  string internship_id = 5;
-  string status = 6;
-  string chat_id = 7;
-  google.protobuf.Timestamp created_at = 8;
-  google.protobuf.Timestamp updated_at = 9;
+  string resume_id = 3;
+  string internship_id = 4;
+  string status = 5;
+  string chat_id = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message UserApplications {
+  repeated UserApplication applications = 1;
 }
 
 message GetUserApplicationsRequest {
   string user_id = 1;
-}
-
-message Applications {
-  repeated Application applications = 1;
 }
 
 message DeleteUserApplicationRequest {
@@ -103,3 +102,18 @@ message DeleteCompanyApplicationRequest {
 }
 
 message DeleteCompanyApplicationResponse {}
+
+message CompanyApplication {
+  int64 id = 1;
+  string company_id = 2;
+  string resume_id = 3;
+  string internship_id = 4;
+  string status = 5;
+  string chat_id = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message CompanyApplications {
+  repeated CompanyApplication applications = 1;
+}

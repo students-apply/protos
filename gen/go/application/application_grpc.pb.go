@@ -31,9 +31,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserApplicationServiceClient interface {
 	CreateApplication(ctx context.Context, in *CreateUserApplicationRequest, opts ...grpc.CallOption) (*CreateUserApplicationResponse, error)
-	GetApplicationByID(ctx context.Context, in *GetUserApplicationByIDRequest, opts ...grpc.CallOption) (*Application, error)
-	GetApplications(ctx context.Context, in *GetUserApplicationsRequest, opts ...grpc.CallOption) (*Applications, error)
-	UpdateApplication(ctx context.Context, in *UpdateUserApplicationRequest, opts ...grpc.CallOption) (*Application, error)
+	GetApplicationByID(ctx context.Context, in *GetUserApplicationByIDRequest, opts ...grpc.CallOption) (*UserApplication, error)
+	GetApplications(ctx context.Context, in *GetUserApplicationsRequest, opts ...grpc.CallOption) (*UserApplications, error)
+	UpdateApplication(ctx context.Context, in *UpdateUserApplicationRequest, opts ...grpc.CallOption) (*UserApplication, error)
 	DeleteApplication(ctx context.Context, in *DeleteUserApplicationRequest, opts ...grpc.CallOption) (*DeleteUserApplicationResponse, error)
 }
 
@@ -54,8 +54,8 @@ func (c *userApplicationServiceClient) CreateApplication(ctx context.Context, in
 	return out, nil
 }
 
-func (c *userApplicationServiceClient) GetApplicationByID(ctx context.Context, in *GetUserApplicationByIDRequest, opts ...grpc.CallOption) (*Application, error) {
-	out := new(Application)
+func (c *userApplicationServiceClient) GetApplicationByID(ctx context.Context, in *GetUserApplicationByIDRequest, opts ...grpc.CallOption) (*UserApplication, error) {
+	out := new(UserApplication)
 	err := c.cc.Invoke(ctx, UserApplicationService_GetApplicationByID_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -63,8 +63,8 @@ func (c *userApplicationServiceClient) GetApplicationByID(ctx context.Context, i
 	return out, nil
 }
 
-func (c *userApplicationServiceClient) GetApplications(ctx context.Context, in *GetUserApplicationsRequest, opts ...grpc.CallOption) (*Applications, error) {
-	out := new(Applications)
+func (c *userApplicationServiceClient) GetApplications(ctx context.Context, in *GetUserApplicationsRequest, opts ...grpc.CallOption) (*UserApplications, error) {
+	out := new(UserApplications)
 	err := c.cc.Invoke(ctx, UserApplicationService_GetApplications_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -72,8 +72,8 @@ func (c *userApplicationServiceClient) GetApplications(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *userApplicationServiceClient) UpdateApplication(ctx context.Context, in *UpdateUserApplicationRequest, opts ...grpc.CallOption) (*Application, error) {
-	out := new(Application)
+func (c *userApplicationServiceClient) UpdateApplication(ctx context.Context, in *UpdateUserApplicationRequest, opts ...grpc.CallOption) (*UserApplication, error) {
+	out := new(UserApplication)
 	err := c.cc.Invoke(ctx, UserApplicationService_UpdateApplication_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -95,9 +95,9 @@ func (c *userApplicationServiceClient) DeleteApplication(ctx context.Context, in
 // for forward compatibility
 type UserApplicationServiceServer interface {
 	CreateApplication(context.Context, *CreateUserApplicationRequest) (*CreateUserApplicationResponse, error)
-	GetApplicationByID(context.Context, *GetUserApplicationByIDRequest) (*Application, error)
-	GetApplications(context.Context, *GetUserApplicationsRequest) (*Applications, error)
-	UpdateApplication(context.Context, *UpdateUserApplicationRequest) (*Application, error)
+	GetApplicationByID(context.Context, *GetUserApplicationByIDRequest) (*UserApplication, error)
+	GetApplications(context.Context, *GetUserApplicationsRequest) (*UserApplications, error)
+	UpdateApplication(context.Context, *UpdateUserApplicationRequest) (*UserApplication, error)
 	DeleteApplication(context.Context, *DeleteUserApplicationRequest) (*DeleteUserApplicationResponse, error)
 	mustEmbedUnimplementedUserApplicationServiceServer()
 }
@@ -109,13 +109,13 @@ type UnimplementedUserApplicationServiceServer struct {
 func (UnimplementedUserApplicationServiceServer) CreateApplication(context.Context, *CreateUserApplicationRequest) (*CreateUserApplicationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateApplication not implemented")
 }
-func (UnimplementedUserApplicationServiceServer) GetApplicationByID(context.Context, *GetUserApplicationByIDRequest) (*Application, error) {
+func (UnimplementedUserApplicationServiceServer) GetApplicationByID(context.Context, *GetUserApplicationByIDRequest) (*UserApplication, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplicationByID not implemented")
 }
-func (UnimplementedUserApplicationServiceServer) GetApplications(context.Context, *GetUserApplicationsRequest) (*Applications, error) {
+func (UnimplementedUserApplicationServiceServer) GetApplications(context.Context, *GetUserApplicationsRequest) (*UserApplications, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplications not implemented")
 }
-func (UnimplementedUserApplicationServiceServer) UpdateApplication(context.Context, *UpdateUserApplicationRequest) (*Application, error) {
+func (UnimplementedUserApplicationServiceServer) UpdateApplication(context.Context, *UpdateUserApplicationRequest) (*UserApplication, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateApplication not implemented")
 }
 func (UnimplementedUserApplicationServiceServer) DeleteApplication(context.Context, *DeleteUserApplicationRequest) (*DeleteUserApplicationResponse, error) {
@@ -270,9 +270,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CompanyApplicationServiceClient interface {
 	CreateApplication(ctx context.Context, in *CreateCompanyApplicationRequest, opts ...grpc.CallOption) (*CreateCompanyApplicationResponse, error)
-	GetApplicationByID(ctx context.Context, in *GetCompanyApplicationByIDRequest, opts ...grpc.CallOption) (*Application, error)
-	GetApplications(ctx context.Context, in *GetCompanyApplicationsRequest, opts ...grpc.CallOption) (*Applications, error)
-	UpdateApplication(ctx context.Context, in *UpdateCompanyApplicationRequest, opts ...grpc.CallOption) (*Application, error)
+	GetApplicationByID(ctx context.Context, in *GetCompanyApplicationByIDRequest, opts ...grpc.CallOption) (*CompanyApplication, error)
+	GetApplications(ctx context.Context, in *GetCompanyApplicationsRequest, opts ...grpc.CallOption) (*CompanyApplications, error)
+	UpdateApplication(ctx context.Context, in *UpdateCompanyApplicationRequest, opts ...grpc.CallOption) (*CompanyApplication, error)
 	DeleteApplication(ctx context.Context, in *DeleteCompanyApplicationRequest, opts ...grpc.CallOption) (*DeleteCompanyApplicationResponse, error)
 }
 
@@ -293,8 +293,8 @@ func (c *companyApplicationServiceClient) CreateApplication(ctx context.Context,
 	return out, nil
 }
 
-func (c *companyApplicationServiceClient) GetApplicationByID(ctx context.Context, in *GetCompanyApplicationByIDRequest, opts ...grpc.CallOption) (*Application, error) {
-	out := new(Application)
+func (c *companyApplicationServiceClient) GetApplicationByID(ctx context.Context, in *GetCompanyApplicationByIDRequest, opts ...grpc.CallOption) (*CompanyApplication, error) {
+	out := new(CompanyApplication)
 	err := c.cc.Invoke(ctx, CompanyApplicationService_GetApplicationByID_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -302,8 +302,8 @@ func (c *companyApplicationServiceClient) GetApplicationByID(ctx context.Context
 	return out, nil
 }
 
-func (c *companyApplicationServiceClient) GetApplications(ctx context.Context, in *GetCompanyApplicationsRequest, opts ...grpc.CallOption) (*Applications, error) {
-	out := new(Applications)
+func (c *companyApplicationServiceClient) GetApplications(ctx context.Context, in *GetCompanyApplicationsRequest, opts ...grpc.CallOption) (*CompanyApplications, error) {
+	out := new(CompanyApplications)
 	err := c.cc.Invoke(ctx, CompanyApplicationService_GetApplications_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -311,8 +311,8 @@ func (c *companyApplicationServiceClient) GetApplications(ctx context.Context, i
 	return out, nil
 }
 
-func (c *companyApplicationServiceClient) UpdateApplication(ctx context.Context, in *UpdateCompanyApplicationRequest, opts ...grpc.CallOption) (*Application, error) {
-	out := new(Application)
+func (c *companyApplicationServiceClient) UpdateApplication(ctx context.Context, in *UpdateCompanyApplicationRequest, opts ...grpc.CallOption) (*CompanyApplication, error) {
+	out := new(CompanyApplication)
 	err := c.cc.Invoke(ctx, CompanyApplicationService_UpdateApplication_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -334,9 +334,9 @@ func (c *companyApplicationServiceClient) DeleteApplication(ctx context.Context,
 // for forward compatibility
 type CompanyApplicationServiceServer interface {
 	CreateApplication(context.Context, *CreateCompanyApplicationRequest) (*CreateCompanyApplicationResponse, error)
-	GetApplicationByID(context.Context, *GetCompanyApplicationByIDRequest) (*Application, error)
-	GetApplications(context.Context, *GetCompanyApplicationsRequest) (*Applications, error)
-	UpdateApplication(context.Context, *UpdateCompanyApplicationRequest) (*Application, error)
+	GetApplicationByID(context.Context, *GetCompanyApplicationByIDRequest) (*CompanyApplication, error)
+	GetApplications(context.Context, *GetCompanyApplicationsRequest) (*CompanyApplications, error)
+	UpdateApplication(context.Context, *UpdateCompanyApplicationRequest) (*CompanyApplication, error)
 	DeleteApplication(context.Context, *DeleteCompanyApplicationRequest) (*DeleteCompanyApplicationResponse, error)
 	mustEmbedUnimplementedCompanyApplicationServiceServer()
 }
@@ -348,13 +348,13 @@ type UnimplementedCompanyApplicationServiceServer struct {
 func (UnimplementedCompanyApplicationServiceServer) CreateApplication(context.Context, *CreateCompanyApplicationRequest) (*CreateCompanyApplicationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateApplication not implemented")
 }
-func (UnimplementedCompanyApplicationServiceServer) GetApplicationByID(context.Context, *GetCompanyApplicationByIDRequest) (*Application, error) {
+func (UnimplementedCompanyApplicationServiceServer) GetApplicationByID(context.Context, *GetCompanyApplicationByIDRequest) (*CompanyApplication, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplicationByID not implemented")
 }
-func (UnimplementedCompanyApplicationServiceServer) GetApplications(context.Context, *GetCompanyApplicationsRequest) (*Applications, error) {
+func (UnimplementedCompanyApplicationServiceServer) GetApplications(context.Context, *GetCompanyApplicationsRequest) (*CompanyApplications, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplications not implemented")
 }
-func (UnimplementedCompanyApplicationServiceServer) UpdateApplication(context.Context, *UpdateCompanyApplicationRequest) (*Application, error) {
+func (UnimplementedCompanyApplicationServiceServer) UpdateApplication(context.Context, *UpdateCompanyApplicationRequest) (*CompanyApplication, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateApplication not implemented")
 }
 func (UnimplementedCompanyApplicationServiceServer) DeleteApplication(context.Context, *DeleteCompanyApplicationRequest) (*DeleteCompanyApplicationResponse, error) {
