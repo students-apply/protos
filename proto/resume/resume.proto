@@ -33,8 +33,7 @@ message UpdateResumeRequest {
 message UpdateResumeResponse {}
 
 message GetResumeByIDRequest {
-  string user_id = 1;
-  string resume_id = 2;
+  string resume_id = 1;
 }
 
 message GetUserResumesRequest {
