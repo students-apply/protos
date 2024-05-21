@@ -23,6 +23,7 @@ message CreateViewResponse {
 message GetResumeViewsRequest {
   string resume_id = 1;
   optional int32 last_days = 2;
+  string user_id = 3;
 }
 
 message GetResumeViewsResponse {
